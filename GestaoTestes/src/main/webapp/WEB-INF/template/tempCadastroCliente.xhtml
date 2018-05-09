@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<!-- HEAD DO TEMPLATE PADRÃO DO SISTEMA -->
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Sistema de Comunicação e Gestão de Equipe de Testes</title>
+	<h:outputStylesheet library="css" name="cadastroCliente.css" />
+</h:head>
+
+<h:body>
+
+	<!-- STATUS DAS REQUISIÇÕES AJAX (LOADING) -->
+	<p:ajaxStatus styleClass="ajaxstatus">
+		<f:facet name="start">
+			<h:graphicImage library="images" name="Loading.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<p:outputLabel value="" />
+		</f:facet>
+	</p:ajaxStatus>
+
+	<div class="ui-fluid">
+
+		<!-- CABEÇALHO DA PAGINA PADRÃO -->
+		<p:panelGrid columns="1" layout="grid" columnClasses="ui-grid-col-12"
+			styleClass="ui-panelgrid-blank">
+			<p:outputPanel>
+				<div class="header">
+					<p:panelGrid columns="3" layout="grid"
+						columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2"
+						styleClass="ui-panelgrid-blank">
+						<p:outputPanel>
+							<p:graphicImage library="images" name="menu.png" height="10%"
+								width="10%" />
+							<p:outputLabel value="MENU" style="color:#ffffff"></p:outputLabel>
+						</p:outputPanel>
+
+						<p:outputPanel>
+							<h:link>
+								<h:outputLabel
+									value="Sistema de Comunicação e Gestão de Equipe de Testes"
+									style="color:#ffffff" />
+							</h:link>
+						</p:outputPanel>
+
+						<p:outputPanel>
+							<p:outputLabel value="Roberto Floro" style="color:#ffffff"></p:outputLabel>
+							<p:graphicImage library="images" name="usuNull.png" height="15%"
+								width="15%" />
+						</p:outputPanel>
+					</p:panelGrid>
+				</div>
+			</p:outputPanel>
+
+			<!-- CORPO DA PAGINA PADRÃO -->
+			<p:outputPanel>
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-3,ui-grid-col-9"
+					styleClass="ui-panelgrid-blank">
+					<p:outputPanel>
+						<ui:insert name="conteudolEsquerdo" />
+					</p:outputPanel>
+					<p:outputPanel>
+						<ui:insert name="conteudolDireito" />
+					</p:outputPanel>
+				</p:panelGrid>
+
+			</p:outputPanel>
+		</p:panelGrid>
+	</div>
+</h:body>
+
+</html>

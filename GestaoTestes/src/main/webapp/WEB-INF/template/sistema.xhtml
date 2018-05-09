@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+    <!-- HEAD DO TEMPLATE PADRÃO DO SISTEMA -->
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    		<title><ui:insert name="titulo">Sistema de Comunicação e Gestão de Equipe de Testes</ui:insert></title>
+    		<h:outputStylesheet library="css" name="sistema.css"/>
+	</h:head>
+	
+	<h:body style="width:100%; height: 100%">
+	
+		<!-- STATUS DAS REQUISIÇÕES AJAX (LOADING) -->
+		<p:ajaxStatus styleClass="ajaxstatus">
+			<f:facet name="start">
+				<h:graphicImage library="images" name="Loading.gif"/>
+			</f:facet>
+			<f:facet name="complete">
+				<p:outputLabel value="" />
+			</f:facet>
+		</p:ajaxStatus>
+		
+		<!-- CABEÇALHO DA PAGINA PADRÃO -->
+		<header>
+		  <div>
+		  	<h:link>
+		  		<h:outputLabel value="Sistema de Comunicação e Gestão de Equipe de Testes" style="color:#ffffff"/>
+		  	</h:link>
+		  </div>
+		</header>
+	
+		<!-- CORPO DA PAGINA PADRÃO -->
+		<div id="corpolEsquerdo">
+	 		
+	 		<ui:insert name="conteudolEsquerdo" styleClass="conteudoEsquerdo">
+	 		
+	 		  
+	 		</ui:insert>
+	 	
+	 	</div> 	
+	 	
+	 		<!-- CORPO DA PAGINA PADRÃO -->
+		<div id="corpolDireito">
+	 		
+	 		<ui:insert name="conteudolDireito" styleClass="conteudoDireito"> 		
+	 		  
+	 		</ui:insert>
+	 	
+	 	</div> 
+	
+	</h:body>
+
+</html>

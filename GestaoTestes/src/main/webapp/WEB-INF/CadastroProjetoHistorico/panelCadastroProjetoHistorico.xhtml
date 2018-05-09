@@ -1,0 +1,120 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:ui="http://java.sun.com/jsf/facelets"
+      			xmlns:p="http://primefaces.org/ui">
+  
+
+		<p:panelGrid layout="grid" columns="1" style="height: 100% !important; width: 100% !important" columnClasses="ldDireito">
+	  		
+	  		<!-- PAINEL DE CADASTRO DO PROJETO-->
+	  		<h:panelGroup>
+		  		<h:form id="frmCadastro">
+		  		<p:outputLabel value="Cadastro Histórico Projeto" style="font-size: 24px"/><br/><br/>
+		  	
+		  		<p:panelGrid styleClass="panelCadastro" style="width: 100%; height: 100%">
+		  			
+		  			<!-- PAINEL DOS DADOS (TOP) DO CADASTRO DO PROJETO-->
+					 <p:panelGrid style="margin-top:20px;width: 100%; height: 100%;" columns="3" >
+			  			<h:panelGroup columns="1">	  			
+				  			<p:outputLabel value="Nome do Sistema:" for="nomeSistema"/><br/>
+				  			<p:selectOneMenu id="nomeSistema"  size="50" >
+				  				<f:selectItem  itemLabel="selecione sistema" />
+				  			</p:selectOneMenu>
+			  			</h:panelGroup>
+			  			
+						<h:panelGroup>	  			
+				  			<p:outputLabel value="Nome do Gerente:" for="nomeGerente"/><br/>
+				  			<p:selectOneMenu id="nomeGerente" styleClass="selectOneMenu"  size="50" >
+				  				<f:selectItem  itemLabel="selecione gerente"  />
+				  			</p:selectOneMenu>
+			  			</h:panelGroup>
+						
+						<h:panelGroup>
+							<p:outputLabel value="Status do Projeto:" for="statusProjeto"/><br/>
+							<p:selectOneMenu id="statusProjeto" styleClass="selectOneMenu"  size="50" >
+				  				<f:selectItem  itemLabel="selecione status projeto"/>
+				  			</p:selectOneMenu>
+				  		</h:panelGroup>
+				  		
+				  		<h:panelGroup>
+				  			<p:outputLabel value="Nome do Projeto:" for="nomeProjeto"/><br/>
+				  			<p:selectOneMenu id="nomeProjeto"  size="50" >
+				  				<f:selectItem  itemLabel="selecione projeto"/>
+				  			</p:selectOneMenu>
+			  			</h:panelGroup>
+			  			
+						<h:panelGroup>	  			
+				  			<p:outputLabel value="Nome do Analista:" for="nomeAnalista"/><br/>
+				  			<p:selectOneMenu id="nomeAnalista" size="50" >
+				  				<f:selectItem  itemLabel="selecione Analista"/>
+				  			</p:selectOneMenu>
+			  			</h:panelGroup>
+						
+						<h:panelGroup>
+							<p:outputLabel value="Data Inicio:" for="dataInicio"  size="50" /><br/>
+							<p:calendar id="dataInicio"/>
+				  			
+				  		</h:panelGroup>
+			  			
+			  		</p:panelGrid>
+			  		
+			  		<!-- BARRA DOS BOTÕES -->
+			  		<p:toolbar style="margin-top: 20px">
+			  		
+			  			<p:toolbarGroup align="left" style="padding: 5px;">
+			  				<p:commandButton value="Imprimir Cadastro"/>
+			  				<p:commandButton value="Imprimir Histórico"/>
+			  			</p:toolbarGroup>
+			  			
+			  			<p:toolbarGroup align="right" style="padding: 5px;">
+			  				<p:commandButton value="Adicionar histórico"/>
+			  				<p:commandButton value="salvar"/>
+			  				<p:commandButton value="Editar"/>
+			  				<p:commandButton value="Limpar"/>
+			  			</p:toolbarGroup>
+			  		
+			  		</p:toolbar>  
+			  		
+			  		<!-- TABLE VIEW -->
+			  		<p:tabView style="margin-top: 20px;height: 100%">
+			  		
+			  			<p:tab title="Checkpoints">
+			  			<!-- 
+			  				<p:dataTable columns="3">
+			  				
+			  					<p:column header="id">
+			  						<p:outputLabel value="1"/>
+			  					</p:column>
+			  				
+			  					<p:column header="Tipo Ação">
+			  						<p:outputLabel value="E-mail Enviado"/>
+			  					</p:column>
+			  				
+			  					<p:column header="Descrição">
+			  						<p:outputLabel value="E-mail enviado para o Bruno referente ao projeto."/>
+			  					</p:column>
+			  				
+			  				</p:dataTable>
+			  				 -->
+			  			</p:tab>
+			  			
+			  			<p:tab title="Histórico">
+			  				
+			  			</p:tab>
+			  			
+			  			<p:tab title="Observações">
+			  				
+			  			</p:tab>
+			  		
+			  		</p:tabView>
+		    		
+		    		</p:panelGrid>
+		    		</h:form>
+	    		</h:panelGroup>
+		</p:panelGrid>
+
+
+    
+</ui:composition> 

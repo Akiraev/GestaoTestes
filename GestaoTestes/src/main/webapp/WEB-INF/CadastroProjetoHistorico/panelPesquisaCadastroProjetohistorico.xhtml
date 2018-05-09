@@ -1,0 +1,44 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      			xmlns:h="http://java.sun.com/jsf/html"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:ui="http://java.sun.com/jsf/facelets"
+      			xmlns:p="http://primefaces.org/ui">
+  
+  	
+		<p:panelGrid layout="grid" columns="1" styleClass="ldEsquerdo" >
+			
+	  		<!-- PAINEL E PESQUISA DO PROJETO -->
+			<h:panelGroup>
+				<h:form id="pesquisa">
+				<p:outputLabel value="Pesquisar" style="font-size: 24px"/><br/><br/>
+				
+		  		<p:panelGrid styleClass="panelPesquisa" style="padding: 10px">
+		  		
+		  			<p:outputLabel value="Nome do Sistema" for="nomeSistema"/><br/>
+		  			<p:inputText id="nomeSistema" size="30" /><br/><br/>
+		  			
+		  			<p:outputLabel value="Nome do Projeto" for="nomeProjeto"/><br/>
+		  			<p:inputText id="nomeProjeto" size="30"/><br/><br/>
+		  			
+		  			<p:commandButton value="Pesquisar"/>
+		  			<br/><br/>
+		  			
+		  			
+		  			<p:selectOneListbox value="" style="width: 217px; height: 350px;">
+		  				<f:selectItem  itemLabel="Projeto 01" itemValue="1" size="40"  style="padding: 5px" />
+		  				<f:selectItem  itemLabel="Projeto 01" itemValue="2" size="40"  style="padding: 5px"/>
+		  				<f:selectItem  itemLabel="Projeto 01" itemValue="3" size="40"  style="padding: 5px"/>
+		  				<f:selectItem  itemLabel="Projeto 01" itemValue="4" size="40"  style="padding: 5px"/>
+		  				<f:selectItem  itemLabel="Projeto 01" itemValue="5" size="40"  style="padding: 5px"/>
+		  				<f:selectItem  itemLabel="Projeto 01" itemValue="6" size="40"  style="padding: 5px"/>
+		  				<f:selectItem  itemLabel="Projeto 01" itemValue="7" size="40"  style="padding: 5px"/>
+		  				<f:selectItem  itemLabel="Projeto 01" itemValue="8" size="40"  style="padding: 5px"/>
+		  			</p:selectOneListbox>
+		  			
+		  		</p:panelGrid>
+		  		</h:form>
+	  		</h:panelGroup>
+		</p:panelGrid>
+    
+</ui:composition> 

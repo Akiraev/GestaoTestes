@@ -1,0 +1,28 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- BARRA DOS BOTÕES -->
+	<p:toolbar style="margin-top: 20px; margin-bottom: 20px">
+
+		<p:toolbarGroup align="left" style="padding: 5px;">
+			<p:commandButton value="Imprimir Cadastro Usuario" actionListener="#{CadastroUsuarioBean.gerarPdfUsuario}" update="frmCadastroUsuario"/>
+		</p:toolbarGroup>
+
+		<p:toolbarGroup align="right" style="padding: 5px;">
+			<p:commandButton value="salvar"
+				actionListener="#{CadastroUsuarioBean.salvarUsuario}"
+				update="frmCadastroUsuario" >
+			</p:commandButton>
+			
+			<p:commandButton value="Limpar">
+				<p:ajax update="frmCadastroUsuario" />
+			</p:commandButton>
+		</p:toolbarGroup>
+
+	</p:toolbar>
+
+</ui:composition>

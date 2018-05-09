@@ -1,0 +1,151 @@
+package dominio;
+
+import java.beans.Transient;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import enumeradores.CargoUsuario;
+import enumeradores.DireitoUsuario;
+import enumeradores.NivelUsuario;
+import enumeradores.Status;
+import util.Encode;
+
+@Entity(name = "Usuario")
+public class Usuario {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codUsuario;
+
+	@Column(nullable = false, length = 60, unique = true)
+	private String email;
+
+	@Column(nullable = false, length = 60)
+	private String paswUsuario;
+
+	@Column(nullable = false, length = 60)
+	private String nomeUsuario;
+
+	@Column(updatable = false)
+	private Date dataCadastro;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 40)
+	private CargoUsuario cargo;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 20)
+	private NivelUsuario nivel;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 40)
+	private DireitoUsuario direitoUsuario;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 10)
+	private Status statusUsuario;
+
+	public Usuario() {
+	}
+
+	@Transient
+	public static void limparUsuario(Usuario usuario) {
+		usuario.setCodUsuario(null);
+		usuario.setNomeUsuario("");
+		usuario.setEmail("");
+		usuario.setDataCadastro(null);
+		usuario.setPaswUsuario("");
+		usuario.setDireitoUsuario(null);
+		usuario.setCargo(null);
+		usuario.setStatusUsuario(null);
+		usuario.setNivel(null);
+	}
+	
+	@SuppressWarnings("unlikely-arg-type")
+	@Transient
+	public static boolean permisao(Usuario usuario) {		
+		if(usuario.getDireitoUsuario().getDireito().equals(DireitoUsuario.ANALISTA))
+			return false;
+		return true;
+	}
+
+	public Long getCodUsuario() {
+		return codUsuario;
+	}
+
+	public void setCodUsuario(Long codUsuario) {
+		this.codUsuario = codUsuario;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPaswUsuario() {
+		return paswUsuario;
+	}
+
+	public void setPaswUsuario(String paswUsuario) {
+		this.paswUsuario = Encode.encrip(paswUsuario);
+	}
+
+	public String getNomeUsuario() {
+		return nomeUsuario;
+	}
+
+	public void setNomeUsuario(String nomeUsuario) {
+		this.nomeUsuario = nomeUsuario;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public CargoUsuario getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(CargoUsuario cargo) {
+		this.cargo = cargo;
+	}
+
+	public NivelUsuario getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(NivelUsuario nivel) {
+		this.nivel = nivel;
+	}
+
+	public DireitoUsuario getDireitoUsuario() {
+		return direitoUsuario;
+	}
+
+	public void setDireitoUsuario(DireitoUsuario direitoUsuario) {
+		this.direitoUsuario = direitoUsuario;
+	}
+
+	public Status getStatusUsuario() {
+		return statusUsuario;
+	}
+
+	public void setStatusUsuario(Status statusUsuario) {
+		this.statusUsuario = statusUsuario;
+	}
+
+}

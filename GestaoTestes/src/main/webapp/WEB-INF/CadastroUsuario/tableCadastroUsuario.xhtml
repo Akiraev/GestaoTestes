@@ -1,0 +1,43 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- DATA TABLE USUARIO -->
+	<p:outputLabel value="Usuarios Cadastrados" style="font-size: 20px;" />
+
+	<p:dataTable value="#{CadastroUsuarioBean.usuarios}" var="us" rows="10" paginator="true">
+		<p:column headerText="Codigo" sortBy="#{us.codUsuario}">
+			<h:outputText value="#{us.codUsuario}" />
+		</p:column>
+
+		<p:column headerText="Nome usuario">
+			<h:outputText value="#{us.nomeUsuario}" />
+		</p:column>
+
+		<p:column headerText="E-mail">
+			<h:outputText value="#{us.email}" />
+		</p:column>
+
+		<p:column headerText="Cargo/Função">
+			<h:outputText value="#{us.cargo}" />
+		</p:column>
+
+		<p:column headerText="Nivel">
+			<h:outputText value="#{us.nivel}" />
+		</p:column>
+
+		<p:column headerText="Data Cadastro">
+			<h:outputText value="#{us.dataCadastro}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>			
+			</h:outputText>
+		</p:column>
+	</p:dataTable>
+	
+	<p:outputLabel value="Total de Registros:"/>
+	<p:outputLabel value="#{CadastroUsuarioBean.usuarios.size}"/>
+		  		
+
+</ui:composition>

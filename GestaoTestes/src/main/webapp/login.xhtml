@@ -1,0 +1,57 @@
+
+<ui:composition template="/WEB-INF/template/tempLogin.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Login do sistema de Gestão de testes</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+
+
+			<div id="separadorDIV">
+				<!-- CORPO DO LOGIN DE ACESSO -->
+				<div id="corpoLogin">
+					<p:panelGrid styleClass="noBorders" columns="2">
+				
+							<h3 style="margin-left: 60px">Acesso ao Sistema</h3>
+										
+
+					</p:panelGrid>
+
+					<h:form id="formLogin">
+						
+						<p:panelGrid id="panelLogin" styleClass="noBorders" columns="2"
+							style="width: 100%; margin-top: 20px; margin-bottom: 40px">
+							<p:outputLabel styleClass="labelLogin" value="Usuario:"
+								for="usuario" />
+							<p:inputText id="usuario" size="25" required="true"
+								value="#{loginBean.usuario.email}" />
+
+							<p:outputLabel styleClass="labelLogin" value="Senha: "
+								for="senha" />
+							<p:password id="senha" size="25" required="true"
+								value="#{loginBean.usuario.paswUsuario}" />
+
+							<h:panelGroup />
+
+							<h:panelGroup columns="2" align="right" style="width: 100%">
+								<p:commandButton styleClass="button" value="Acessar"
+									update="@all" action="#{loginBean.logar}" />
+								<p:button styleClass="button" value="cancelar" />
+							</h:panelGroup>
+
+						</p:panelGrid>
+
+					</h:form>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>

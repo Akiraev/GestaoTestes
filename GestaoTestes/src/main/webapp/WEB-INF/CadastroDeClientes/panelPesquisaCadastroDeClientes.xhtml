@@ -1,0 +1,45 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<!-- PAINEL E PESQUISA DO PROJETO -->
+	<h:form id="pesquisaCliente">
+		<p:panel>
+			<p:panelGrid columns="1" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:outputPanel>
+					<h:graphicImage library="images" name="lupa.png" height="15%"
+						width="15%" />
+					<p:outputLabel value="Pesquisar" style="font-size: 24px" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel value="Nome do Cliente" for="nomeCliente" />
+					<p:inputText id="nomeCliente"
+						value="#{cadastroClienteBean.clientePesquisado}" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:commandButton value="Pesquisar"
+						action="#{cadastroClienteBean.buscarClientes}" ajax="false" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<h:dataTable value="#{cadastroClienteBean.resultCliSrc}"
+						var="cliente">
+						<h:column>
+							<h:commandLink value="#{cliente.nomeCliente}"
+								style="text-decoration:none;">
+								<f:setPropertyActionListener value="#{cliente}"
+									target="#{cadastroClienteBean.cliente}" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+				</p:outputPanel>
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
+</ui:composition>
