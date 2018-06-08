@@ -1,7 +1,7 @@
 package enumeradores;
 
 public enum CargoUsuario {
-	ANALISTA("Analista"), PROGRAMADOR("Programador"), GERENTE("Gerente"), ENGENHEIRO("Engenheiro");
+	TESTER("Tester"),PROGRAMADOR("Programador"), ENGENHEIRO("Engenheiro");
 	
 	String cargo;
 	

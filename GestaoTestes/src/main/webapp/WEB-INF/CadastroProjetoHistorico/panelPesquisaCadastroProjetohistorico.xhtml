@@ -6,39 +6,41 @@
       			xmlns:p="http://primefaces.org/ui">
   
   	
-		<p:panelGrid layout="grid" columns="1" styleClass="ldEsquerdo" >
-			
-	  		<!-- PAINEL E PESQUISA DO PROJETO -->
-			<h:panelGroup>
-				<h:form id="pesquisa">
-				<p:outputLabel value="Pesquisar" style="font-size: 24px"/><br/><br/>
+	<!-- PAINEL E PESQUISA DO HISTORICO -->
+	<h:form id="frmPesquisaHistorico">
+		<p:panel>
+			<p:panelGrid columns="1" layout="grid"
+				styleClass="ui-panelgrid-blank">
+				<p:outputPanel>
+					<h:graphicImage library="images" name="lupa.png" height="15%"
+						width="15%" />
+					<p:outputLabel value="Pesquisar" style="font-size: 24px !Important" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:outputLabel value="Nome do pojeto/histórico" for="nomeHistorico" />
+					<p:inputText id="nomeHistorico" value="#{cadastroProjetoBean.projetoPesquisado}" />
+				</p:outputPanel>
 				
-		  		<p:panelGrid styleClass="panelPesquisa" style="padding: 10px">
-		  		
-		  			<p:outputLabel value="Nome do Sistema" for="nomeSistema"/><br/>
-		  			<p:inputText id="nomeSistema" size="30" /><br/><br/>
-		  			
-		  			<p:outputLabel value="Nome do Projeto" for="nomeProjeto"/><br/>
-		  			<p:inputText id="nomeProjeto" size="30"/><br/><br/>
-		  			
-		  			<p:commandButton value="Pesquisar"/>
-		  			<br/><br/>
-		  			
-		  			
-		  			<p:selectOneListbox value="" style="width: 217px; height: 350px;">
-		  				<f:selectItem  itemLabel="Projeto 01" itemValue="1" size="40"  style="padding: 5px" />
-		  				<f:selectItem  itemLabel="Projeto 01" itemValue="2" size="40"  style="padding: 5px"/>
-		  				<f:selectItem  itemLabel="Projeto 01" itemValue="3" size="40"  style="padding: 5px"/>
-		  				<f:selectItem  itemLabel="Projeto 01" itemValue="4" size="40"  style="padding: 5px"/>
-		  				<f:selectItem  itemLabel="Projeto 01" itemValue="5" size="40"  style="padding: 5px"/>
-		  				<f:selectItem  itemLabel="Projeto 01" itemValue="6" size="40"  style="padding: 5px"/>
-		  				<f:selectItem  itemLabel="Projeto 01" itemValue="7" size="40"  style="padding: 5px"/>
-		  				<f:selectItem  itemLabel="Projeto 01" itemValue="8" size="40"  style="padding: 5px"/>
-		  			</p:selectOneListbox>
-		  			
-		  		</p:panelGrid>
-		  		</h:form>
-	  		</h:panelGroup>
-		</p:panelGrid>
+				<p:outputPanel>
+					<p:commandButton value="Pesquisar" 
+					action="#{cadastroProjetoBean.buscarProjetos}" ajax="false"/>
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<h:dataTable value="#{cadastroProjetoBean.projetosPesquisados}"
+						var="projeto">
+						<h:column>
+							<h:commandLink value="#{projeto.nomeProjeto}"
+								style="text-decoration:none;">
+								<f:setPropertyActionListener value="#{projeto}"
+									target="#{cadastroProjetoBean.projeto}" />
+							</h:commandLink>
+						</h:column>
+					</h:dataTable>
+				</p:outputPanel>
+			</p:panelGrid>
+		</p:panel>
+	</h:form>
     
 </ui:composition> 

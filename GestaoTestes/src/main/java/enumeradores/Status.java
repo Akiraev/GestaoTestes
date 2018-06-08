@@ -9,7 +9,7 @@ public enum Status {
 		this.status = status;
 	}
 	
-	public String geStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 }

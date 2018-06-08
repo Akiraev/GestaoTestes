@@ -6,130 +6,191 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-	<p:panelGrid layout="grid" columns="1"
-		style="height: 100% !important; width: 100% !important"
-		columnClasses="ldDireito">
 
-		<!-- PAINEL DE CADASTRO DO USUARIO -->
-		<h:panelGroup>
-			<h:form id="frmCadastroUsuario">
-			<p:growl id="growl" showDetail="true" sticky="true" />
-				<p:outputLabel value="Cadastro de Usuario"
-					style="font-size: 24px; color:#545454;" />
-				<br />
-				<br />
 
-				<p:panelGrid
-					style="width: 100%; height: 100%; background: none !important; border: none !important;">
+	<!-- PAINEL DE CADASTRO DO USUARIO -->
+
+	<h:form id="frmCadastroUsuario">
+		<p:growl id="growl" showDetail="true" sticky="false" life="3000" />
+
+		<p:panel>
+
+			<p:outputPanel>
+				<h:graphicImage library="images" name="logo.png" height="5%"
+					width="5%" />
+				<p:outputLabel value="Cadastro de usuario" />
+			</p:outputPanel>
+
+			<p:panel>
+				<p:panelGrid columns="1" layout="grid"
+					styleClass="ui-panelgrid-blank">
 
 					<!-- PAINEL DOS DADOS (TOPO) DO CADASTRO DO PROJETO-->
-					<p:panelGrid
-						style="margin-top:20px;width: 100%; height: 100%;  background: none !important; border: none !important;"
-						columns="4">
+					<p:outputPanel>
+						<p:panelGrid columns="4" layout="grid"
+							columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+							styleClass="ui-panelgrid-blank">
+							<p:outputPanel>
+								<p:outputLabel value="Código Usuario:" for="codigoUsuario" />
+								<br />
+								<p:inputText id="codigoUsuario" disabled="true"
+									value="#{cadastroUsuarioBean.usuario.codUsuario}" colspan="1"
+									size="20" />
+							</p:outputPanel>
 
-						<h:panelGroup columns="1">
-							<p:outputLabel value="Código Usuario:" for="codigoUsuario" />
-							<br />
-							<p:inputText id="codigoUsuario" disabled="true"
-								value="#{CadastroUsuarioBean.usuario.codUsuario}" colspan="1"
-								size="20" />
-						</h:panelGroup>
+							<p:outputPanel>
+								<p:outputLabel value="Nome do Usuario:" for="nomeUsuario" />
+								<br />
+								<p:inputText id="nomeUsuario"
+									value="#{cadastroUsuarioBean.usuario.nomeUsuario}" colspan="2"
+									size="40" />
+							</p:outputPanel>
 
-						<h:panelGroup>
-							<p:outputLabel value="Nome do Usuario:" for="nomeUsuario" />
-							<br />
-							<p:inputText id="nomeUsuario"
-								value="#{CadastroUsuarioBean.usuario.nomeUsuario}" colspan="2"
-								size="40" />
-						</h:panelGroup>
+							<p:outputPanel>
+								<p:outputLabel value="Status do Usuario:" for="statusUsuario" />
+								<br />
+								<p:selectOneMenu id="statusUsuario" size="20"
+									value="#{cadastroUsuarioBean.usuario.statusUsuario}">
+									<f:selectItem itemLabel="-SELECIONE STATUS-"
+										noSelectionOption="true" />
+									<f:selectItems value="#{cadastroUsuarioBean.status}"
+										itemLabel="#{status}" var="Sts" itemValue="#{Sts}" />
+								</p:selectOneMenu>
+							</p:outputPanel>
 
-						<h:panelGroup>
-							<p:outputLabel value="Status do Usuario:" for="statusUsuario" />
-							<br />
-							<p:selectOneMenu id="statusUsuario" size="20"
-								value="#{CadastroUsuarioBean.usuario.statusUsuario}">
-								<f:selectItem itemLabel="-SELECIONE STATUS-"
-									noSelectionOption="true" />
-								<f:selectItems value="#{CadastroUsuarioBean.status}"
-									itemLabel="#{status}" var="Sts" itemValue="#{Sts}"/>
-							</p:selectOneMenu>
-						</h:panelGroup>
+							<p:outputPanel>
+								<p:outputLabel value="Direito:" for="direitoUsuario" />
+								<br />
+								<p:selectOneMenu id="direitoUsuario" size="20"
+									value="#{cadastroUsuarioBean.usuario.direitoUsuario}">
+									<f:selectItem itemLabel="-SELECIONE DIREITO-"
+										noSelectionOption="true" />
+									<f:selectItems value="#{cadastroUsuarioBean.direito}"
+										itemLabel="#{direito}" />
+								</p:selectOneMenu>
+							</p:outputPanel>
+						</p:panelGrid>
 
-						<h:panelGroup>
-							<p:outputLabel value="Direito:" for="direitoUsuario" />
-							<br />
-							<p:selectOneMenu id="direitoUsuario" size="20"
-								value="#{CadastroUsuarioBean.usuario.direitoUsuario}">
-								<f:selectItem itemLabel="-SELECIONE DIREITO-"
-									noSelectionOption="true" />
-								<f:selectItems value="#{CadastroUsuarioBean.direito}"
-									itemLabel="#{direito}" />
-							</p:selectOneMenu>
-						</h:panelGroup>
+						<p:panelGrid columns="4" layout="grid"
+							columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+							styleClass="ui-panelgrid-blank">
 
-						<h:panelGroup>
-							<p:outputLabel value="Senha:" for="senhaUsuario" />
-							<br />
-							<p:password id="senhaUsuario" size="20"
-								value="#{CadastroUsuarioBean.usuario.paswUsuario}" />
-						</h:panelGroup>
+							<p:outputPanel>
+								<p:outputLabel value="Senha:" for="senhaUsuario" />
+								<br />
+								<p:password id="senhaUsuario" size="20" required="true"
+									value="#{cadastroUsuarioBean.usuario.paswUsuario}" />
+							</p:outputPanel>
 
-						<h:panelGroup>
-							<p:outputLabel value="E-mail:" for="emailUsuario" size="50" />
-							<br />
-							<p:inputText id="emailUsuario" size="40"
-								value="#{CadastroUsuarioBean.usuario.email}" />
-						</h:panelGroup>
+							<p:outputPanel>
+								<p:outputLabel value="E-mail:" for="emailUsuario" size="50" />
+								<br />
+								<p:inputText id="emailUsuario" size="40"
+									value="#{cadastroUsuarioBean.usuario.email}" />
+							</p:outputPanel>
 
-						<h:panelGroup>
-							<p:outputLabel value="Cargo:" for="cargoUsuario" />
-							<br />
-							<p:selectOneMenu id="cargoUsuario" size="20"
-								value="#{CadastroUsuarioBean.usuario.cargo}">
-								<f:selectItem itemLabel="-SELECIONE CARGO-"
-									noSelectionOption="true" />
-								<f:selectItems value="#{CadastroUsuarioBean.cargo}"
-									itemLabel="#{cargo}" />
-							</p:selectOneMenu>
-						</h:panelGroup>
+							<p:outputPanel>
+								<p:outputLabel value="Cargo:" for="cargoUsuario" />
+								<br />
+								<p:selectOneMenu id="cargoUsuario" size="20"
+									value="#{cadastroUsuarioBean.usuario.cargo}">
+									<f:selectItem itemLabel="-SELECIONE CARGO-"
+										noSelectionOption="true" />
+									<f:selectItems value="#{cadastroUsuarioBean.cargo}"
+										itemLabel="#{cargo}" />
+								</p:selectOneMenu>
+							</p:outputPanel>
 
-						<h:panelGroup>
-							<p:outputLabel value="Nivel:" for="nivelUsuario" />
-							<br />
-							<p:selectOneMenu id="nivelUsuario" size="20"
-								value="#{CadastroUsuarioBean.usuario.nivel}">
-								<f:selectItem itemLabel="-SELECIONE NIVEL-"
-									noSelectionOption="true" />
-								<f:selectItems value="#{CadastroUsuarioBean.nivel}"
-									itemLabel="#{nivel}" />
-							</p:selectOneMenu>
-						</h:panelGroup>
+							<p:outputPanel>
+								<p:outputLabel value="Nivel:" for="nivelUsuario" />
+								<br />
+								<p:selectOneMenu id="nivelUsuario" size="20"
+									value="#{cadastroUsuarioBean.usuario.nivel}">
+									<f:selectItem itemLabel="-SELECIONE NIVEL-"
+										noSelectionOption="true" />
+									<f:selectItems value="#{cadastroUsuarioBean.nivel}"
+										itemLabel="#{nivel}" />
+								</p:selectOneMenu>
+							</p:outputPanel>
+						</p:panelGrid>
+						<p:panelGrid columns="4" layout="grid"
+							columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+							styleClass="ui-panelgrid-blank">
 
-						<h:panelGroup>
-							<p:outputLabel value="Data Cadastro:" for="dtCadastroUsuario" />
-							<br />
-							<p:calendar id="dtCadastroUsuario" size="20"
-								value="#{CadastroUsuarioBean.usuario.dataCadastro}" />
-						</h:panelGroup>
-
-					</p:panelGrid>
+							<p:outputPanel>
+								<p:outputLabel value="Data Cadastro:" for="dtCadastroUsuario" />
+								<br />
+								<p:calendar id="dtCadastroUsuario" size="20"
+									value="#{cadastroUsuarioBean.usuario.dataCadastro}" />
+							</p:outputPanel>
+							<p:outputPanel></p:outputPanel>
+							<p:outputPanel></p:outputPanel>
+							<p:outputPanel></p:outputPanel>
+						</p:panelGrid>
+					</p:outputPanel>
 
 					<!-- BARRA DOS BOTÕES -->
-					<ui:include
-						src="/WEB-INF/CadastroUsuario/toolbarCadastroUsuario.xhtml"
-						style="margim-top: 20px" />
+					<p:panel>
+						<p:panelGrid columns="3" layout="grid"
+							columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+							styleClass="ui-panelgrid-blank">
+
+							<p:commandButton value="Imprimir"
+								actionListener="#{cadastroUsuarioBean.gerarPdfUsuario}"
+								update="frmCadastroUsuario" />
+
+							<p:commandButton value="salvar"
+								actionListener="#{cadastroUsuarioBean.salvarUsuario}"
+								update="frmCadastroUsuario frmPesquisausuario">
+							</p:commandButton>
+
+							<p:commandButton value="Limpar"
+								action="#{cadastroUsuarioBean.limparUsuario}" process="@this"
+								update="frmCadastroUsuario frmPesquisausuario">
+
+							</p:commandButton>
+						</p:panelGrid>
+					</p:panel>
 
 					<!-- DATA TABLE USUARIOS CADASTRADOS -->
+					<p:outputPanel>
+						<p:outputLabel value="Usuarios Cadastrados"
+							style="font-size: 24px" />
 
-					<ui:include
-						src="/WEB-INF/CadastroUsuario/tableCadastroUsuario.xhtml"
-						style="margim-top: 20px" />
+						<p:dataTable value="#{cadastroUsuarioBean.usuarios}" var="us"
+							style="font-size: 15px">
+							<p:column headerText="Id" width="30">
+								<h:outputText value="#{us.codUsuario}" />
+							</p:column>
 
+							<p:column headerText="Nome usuario">
+								<h:outputText value="#{us.nomeUsuario}" />
+							</p:column>
+
+							<p:column headerText="E-mail">
+								<h:outputText value="#{us.email}" />
+							</p:column>
+
+							<p:column headerText="Cargo/Função">
+								<h:outputText value="#{us.cargo}" />
+							</p:column>
+
+							<p:column headerText="Nivel">
+								<h:outputText value="#{us.nivel}" />
+							</p:column>
+
+							<p:column headerText="Data Cadastro">
+								<h:outputText value="#{us.dataCadastro}"
+									converter="dataConverter" />
+							</p:column>
+						</p:dataTable>
+
+						<p:outputLabel value="Total de Registros:" />
+						<p:outputLabel value="#{cadastroUsuarioBean.usuarios.size()}" />
+					</p:outputPanel>
 				</p:panelGrid>
-			</h:form>
-		</h:panelGroup>
-	</p:panelGrid>
-
-
+			</p:panel>
+		</p:panel>
+	</h:form>
 
 </ui:composition>

@@ -18,10 +18,11 @@ import util.Mensagem;
 public class ClienteBean {
 	private Cliente cliente;
 	private String clientePesquisado;
-	private List<Cliente> resultCliSrc;
+	private List<Cliente> clientesPesquisados;
 	private List<Cliente> clientes;
 
 	public ClienteBean() {
+
 		this.cliente = new Cliente();
 	}
 
@@ -40,10 +41,11 @@ public class ClienteBean {
 				}
 			}
 			if (jaExisteNomeCliente && cliente.getCodCliente() == null) {
-				Mensagem.falha("Já existe um cliente ja está cadastrado com esse nome\nNão foi possível salvar");
+				Mensagem.falha(
+						"Cliente ja está cadastrado com esse nome\ncaso deseje altera-lo faça uma busca\nNão foi possível salvar");
 			} else {
 				DaoCliente.salvar(this.cliente);
-				Cliente.limparCliente(this.cliente);
+				this.limparCampo();
 				this.clientes = DaoCliente.listarClientes();
 
 				Mensagem.sucesso("Cadastro salvo com sucesso!");
@@ -55,29 +57,37 @@ public class ClienteBean {
 	}
 
 	public void limparCampo() {
-		Cliente.limparCliente(this.cliente);
+		DaoCliente.detachCliente(this.cliente);
+		this.cliente = new Cliente();
+		this.clientesPesquisados = null;
 	}
 
 	public void buscarClientes() {
-		this.resultCliSrc = new ArrayList<Cliente>();
-		System.out.println("1");
+		this.limparCampo();
+		this.clientesPesquisados = new ArrayList<Cliente>();
 		if (this.clientePesquisado.length() < 1 || this.clientePesquisado == null) {
-			Mensagem.falha("Prencha o nome do usuario para realizar a pesquisa");
-			System.out.println("2");
+			Mensagem.falha("Prencha o nome do cliente para realizar a pesquisa");
 		} else {
-			System.out.println("3");
 			for (Cliente nome : this.clientes) {
 				if (nome.getNomeCliente().toLowerCase().contains(this.clientePesquisado.toLowerCase())) {
 					Cliente cli = new Cliente();
 					cli = nome;
-					resultCliSrc.add(cli);
+					clientesPesquisados.add(cli);
 				}
 			}
-			if (resultCliSrc.size() == 0) {
-				Mensagem.falha("Usuário não existe");
+			if (clientesPesquisados.size() == 0) {
+				Mensagem.falha("Cliente não existe");
 			}
 			clientePesquisado = null;
 		}
+	}
+
+	public Status[] getStatus() {
+		return Status.values();
+	}
+
+	public UF[] getUF() {
+		return UF.values();
 	}
 
 	public Cliente getCliente() {
@@ -96,28 +106,20 @@ public class ClienteBean {
 		this.clientePesquisado = clientePesquisado;
 	}
 
+	public List<Cliente> getClientesPesquisados() {
+		return clientesPesquisados;
+	}
+
+	public void setClientesPesquisados(List<Cliente> clientesPesquisados) {
+		this.clientesPesquisados = clientesPesquisados;
+	}
+
 	public List<Cliente> getClientes() {
 		return clientes;
 	}
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
-	}
-
-	public List<Cliente> getResultCliSrc() {
-		return resultCliSrc;
-	}
-
-	public void setResultCliSrc(List<Cliente> resultCliSrc) {
-		this.resultCliSrc = resultCliSrc;
-	}
-
-	public Status[] getStatus() {
-		return Status.values();
-	}
-
-	public UF[] getUF() {
-		return UF.values();
 	}
 
 }

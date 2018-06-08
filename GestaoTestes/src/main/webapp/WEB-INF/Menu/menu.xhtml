@@ -1,0 +1,35 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid>
+		<p:outputPanel id="tb">
+			<div class="header">
+				<p:panelGrid columns="3" layout="grid"
+					columnClasses="ui-grid-col-2,ui-grid-col-8,ui-grid-col-2"
+					styleClass="ui-panelgrid-blank">
+					<p:outputPanel>
+						<div>
+							<p:graphicImage library="images" name="menu.png" height="15%"
+								styleClass="mnImg" width="15%" />
+						</div>
+						<p:outputLabel value="MENU" style="color:#ffffff"></p:outputLabel>
+					</p:outputPanel>
+
+					<p:outputPanel>
+					</p:outputPanel>
+
+					<p:outputPanel>
+						<p:outputLabel value="Olá, Roberto " style="color:#ffffff"></p:outputLabel>
+						<p:graphicImage library="images" name="usuNull.png" height="15%"
+							width="15%" />
+					</p:outputPanel>
+				</p:panelGrid>
+			</div>
+		</p:outputPanel>
+
+	</p:panelGrid>
+
+</ui:composition>

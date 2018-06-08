@@ -3,7 +3,7 @@ package bean;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import dao.Login;
+import dao.DaoLogin;
 import dominio.Usuario;
 import util.Mensagem;
 
@@ -17,7 +17,7 @@ public class LoginBean {
 	}
 
 	public String logar() {
-		if (Login.logar(usuario)) {
+		if (DaoLogin.logar(usuario)) {
 			Mensagem.sucesso("Logado");
 			return "/cadastrousuario.xhtml?faces-redirect=true";
 			

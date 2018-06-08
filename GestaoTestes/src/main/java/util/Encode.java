@@ -24,11 +24,11 @@ public class Encode {
 		}
 		return hexOutput;
 	}
-	
+
 	public static String encrip(String pwd) {
-        if (md != null) {
-            return new String(hexCodes(md.digest(pwd.getBytes())));
-        }
-        return null;
-}
+		if (md != null) {
+			return new String(hexCodes(md.digest(pwd.getBytes())));
+		}
+		return null;
+	}
 }

@@ -5,8 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<!-- PAINEL E PESQUISA DO PROJETO -->
-	<h:form id="pesquisaCliente">
+	<!-- PAINEL E PESQUISA DO CLIENTE -->
+	<h:form id="frmPesquisaCliente">
 		<p:panel>
 			<p:panelGrid columns="1" layout="grid"
 				styleClass="ui-panelgrid-blank">
@@ -28,12 +28,12 @@
 				</p:outputPanel>
 
 				<p:outputPanel>
-					<h:dataTable value="#{cadastroClienteBean.resultCliSrc}"
+					<h:dataTable value="#{cadastroClienteBean.clientesPesquisados}"
 						var="cliente">
 						<h:column>
 							<h:commandLink value="#{cliente.nomeCliente}"
-								style="text-decoration:none;">
-								<f:setPropertyActionListener value="#{cliente}"
+								style="text-decoration:none;" >
+								<f:setPropertyActionListener value="#{cliente}" 
 									target="#{cadastroClienteBean.cliente}" />
 							</h:commandLink>
 						</h:column>

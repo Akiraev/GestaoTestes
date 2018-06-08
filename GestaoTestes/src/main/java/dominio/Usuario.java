@@ -1,6 +1,5 @@
 package dominio;
 
-import java.beans.Transient;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -53,27 +52,6 @@ public class Usuario {
 	private Status statusUsuario;
 
 	public Usuario() {
-	}
-
-	@Transient
-	public static void limparUsuario(Usuario usuario) {
-		usuario.setCodUsuario(null);
-		usuario.setNomeUsuario("");
-		usuario.setEmail("");
-		usuario.setDataCadastro(null);
-		usuario.setPaswUsuario("");
-		usuario.setDireitoUsuario(null);
-		usuario.setCargo(null);
-		usuario.setStatusUsuario(null);
-		usuario.setNivel(null);
-	}
-	
-	@SuppressWarnings("unlikely-arg-type")
-	@Transient
-	public static boolean permisao(Usuario usuario) {		
-		if(usuario.getDireitoUsuario().getDireito().equals(DireitoUsuario.ANALISTA))
-			return false;
-		return true;
 	}
 
 	public Long getCodUsuario() {
@@ -147,5 +125,4 @@ public class Usuario {
 	public void setStatusUsuario(Status statusUsuario) {
 		this.statusUsuario = statusUsuario;
 	}
-
 }

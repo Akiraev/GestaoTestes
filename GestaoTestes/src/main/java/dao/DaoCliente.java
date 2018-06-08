@@ -1,17 +1,18 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import dominio.Cliente;
+import enumeradores.Status;
 import factory.ManageFactory;
 
 public class DaoCliente {
 
-	public static void salvar(Cliente cliente)
-	{
+	public static void salvar(Cliente cliente) {
 		if (cliente.getCodCliente() != null)
 			DaoCliente.alterar(cliente);
 		else
@@ -26,12 +27,14 @@ public class DaoCliente {
 				entityManager.getTransaction().begin();
 				entityManager.persist(cliente);
 				entityManager.getTransaction().commit();
-				entityManager.close();
+
 				return true;
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				entityManager.getTransaction().rollback();
+			} finally {
+				entityManager.close();
 			}
 		}
 
@@ -40,78 +43,113 @@ public class DaoCliente {
 	}
 
 	public static boolean alterar(Cliente cliente) {
-		EntityManager em = ManageFactory.getEntityManager();
-		em.find(Cliente.class, cliente.getCodCliente());
+		EntityManager entityManager = ManageFactory.getEntityManager();
+		entityManager.find(Cliente.class, cliente.getCodCliente());
 		try {
-			em.getTransaction().begin();
-			em.merge(cliente);
-			em.getTransaction().commit();
-			em.close();
+			entityManager.getTransaction().begin();
+			entityManager.merge(cliente);
+			entityManager.getTransaction().commit();
+
 			return true;
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			em.getTransaction().rollback();
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 		return false;
 	}
 
 	public static void excluir(String nomeCliente) {
-		EntityManager em = ManageFactory.getEntityManager();
+		EntityManager entityManager = ManageFactory.getEntityManager();
 
 		try {
 			String busca = "Select a from Cliente a where a.nomecliente = :nomecliente";
-			Query query = em.createQuery(busca);
+			Query query = entityManager.createQuery(busca);
 
 			query.setParameter("nomecliente", nomeCliente);
 			Cliente cliente = (Cliente) query.getSingleResult();
 
-			em.getTransaction().begin();
-			em.remove(cliente);
-			em.getTransaction().commit();
-			em.close();
+			entityManager.getTransaction().begin();
+			entityManager.remove(cliente);
+			entityManager.getTransaction().commit();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			em.getTransaction().rollback();
+			entityManager.getTransaction().rollback();
+		} finally {
+			entityManager.close();
 		}
 	}
 
-	public static Cliente buscaUsuario(String nomeCliente) {
-		EntityManager em = ManageFactory.getEntityManager();
+	public static Cliente buscaClientePeloNome(String nomeCliente) {
+		EntityManager entityManager = ManageFactory.getEntityManager();
 		Cliente cliente = new Cliente();
 
 		try {
-			Query query = em.createQuery("Select cl from Cliente cl where cl.nomeCliente = :nomeCliente", Cliente.class);
+			Query query = entityManager.createQuery("Select cl from Cliente cl where cl.nomeCliente = :nomeCliente",
+					Cliente.class);
 			query.setParameter("nomeCliente", nomeCliente);
 
 			cliente = (Cliente) query.getSingleResult();
-			em.close();
 			return cliente;
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			entityManager.close();
 		}
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Cliente> listarClientes() {
-		EntityManager em = ManageFactory.getEntityManager();
+		EntityManager entityManager = ManageFactory.getEntityManager();
 		ArrayList<Cliente> clientes;
 
 		try {
 
-			Query q = em.createQuery("select cli from Cliente cli", Cliente.class);
+			Query q = entityManager.createQuery("select cli from Cliente cli", Cliente.class);
 			clientes = (ArrayList<Cliente>) q.getResultList();
-			em.close();
 
 			return clientes;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("ultima linha da busca");
+		} finally {
+			entityManager.close();
 		}
-		System.out.println("terminou a busca");
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<Cliente> listarClientesAtivos() {
+		EntityManager entityManager = ManageFactory.getEntityManager();
+
+		try {
+			Query q = entityManager.createQuery("select cli from Cliente cli where cli.statusCliente = :status",
+					Cliente.class);
+			q.setParameter("status", Status.ATIVO);
+			return q.getResultList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			entityManager.close();
+		}
+		return null;
+	}
+
+	public static void detachCliente(Cliente cli) {
+		EntityManager entityManager = ManageFactory.getEntityManager();
+		
+		try {
+			entityManager.getTransaction().begin();
+			entityManager.detach(cli);
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			entityManager.close();
+		}
 	}
 
 }

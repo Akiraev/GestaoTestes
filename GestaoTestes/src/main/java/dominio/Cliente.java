@@ -1,10 +1,8 @@
 package dominio;
 
-import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -60,28 +58,11 @@ public class Cliente {
 	@Column(length = 1000)
 	private String obsCLiente;
 
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="cliente", fetch=FetchType.EAGER)
 	private List<Projeto> projetos;
-
+	
 	public Cliente() {
-	}
-
-	@Transient
-	public static void limparCliente(Cliente cliente) {
-
-		cliente.setCodCliente(null);
-		cliente.setNomeCliente("");
-		cliente.setTelCliente("");
-		cliente.setStatusCliente(null);
-		cliente.setEnderecoCliente("");
-		cliente.setNumEndCliente(null);
-		cliente.setBairroCliente(null);
-		cliente.setCepCliente("");
-		cliente.setCidadeCliente("");
-		cliente.setUf(null);/**/
-		cliente.setDataCadastro(null);
-		cliente.setObsCLiente("");
-	}
+	}	
 
 	public Long getCodCliente() {
 		return codCliente;
@@ -186,6 +167,4 @@ public class Cliente {
 	public void setProjetos(List<Projeto> projetos) {
 		this.projetos = projetos;
 	}
-	
-
 }
