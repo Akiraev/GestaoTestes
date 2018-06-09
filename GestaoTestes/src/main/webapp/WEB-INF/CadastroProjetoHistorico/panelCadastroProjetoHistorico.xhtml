@@ -1,120 +1,304 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      			xmlns:h="http://java.sun.com/jsf/html"
-      			xmlns:f="http://java.sun.com/jsf/core"
-      			xmlns:ui="http://java.sun.com/jsf/facelets"
-      			xmlns:p="http://primefaces.org/ui">
-  
-
-		<p:panelGrid layout="grid" columns="1" style="height: 100% !important; width: 100% !important" columnClasses="ldDireito">
-	  		
-	  		<!-- PAINEL DE CADASTRO DO PROJETO-->
-	  		<h:panelGroup>
-		  		<h:form id="frmCadastro">
-		  		<p:outputLabel value="Cadastro Histórico Projeto" style="font-size: 24px"/><br/><br/>
-		  	
-		  		<p:panelGrid styleClass="panelCadastro" style="width: 100%; height: 100%">
-		  			
-		  			<!-- PAINEL DOS DADOS (TOP) DO CADASTRO DO PROJETO-->
-					 <p:panelGrid style="margin-top:20px;width: 100%; height: 100%;" columns="3" >
-			  			<h:panelGroup columns="1">	  			
-				  			<p:outputLabel value="Nome do Sistema:" for="nomeSistema"/><br/>
-				  			<p:selectOneMenu id="nomeSistema"  size="50" >
-				  				<f:selectItem  itemLabel="selecione sistema" />
-				  			</p:selectOneMenu>
-			  			</h:panelGroup>
-			  			
-						<h:panelGroup>	  			
-				  			<p:outputLabel value="Nome do Gerente:" for="nomeGerente"/><br/>
-				  			<p:selectOneMenu id="nomeGerente" styleClass="selectOneMenu"  size="50" >
-				  				<f:selectItem  itemLabel="selecione gerente"  />
-				  			</p:selectOneMenu>
-			  			</h:panelGroup>
-						
-						<h:panelGroup>
-							<p:outputLabel value="Status do Projeto:" for="statusProjeto"/><br/>
-							<p:selectOneMenu id="statusProjeto" styleClass="selectOneMenu"  size="50" >
-				  				<f:selectItem  itemLabel="selecione status projeto"/>
-				  			</p:selectOneMenu>
-				  		</h:panelGroup>
-				  		
-				  		<h:panelGroup>
-				  			<p:outputLabel value="Nome do Projeto:" for="nomeProjeto"/><br/>
-				  			<p:selectOneMenu id="nomeProjeto"  size="50" >
-				  				<f:selectItem  itemLabel="selecione projeto"/>
-				  			</p:selectOneMenu>
-			  			</h:panelGroup>
-			  			
-						<h:panelGroup>	  			
-				  			<p:outputLabel value="Nome do Analista:" for="nomeAnalista"/><br/>
-				  			<p:selectOneMenu id="nomeAnalista" size="50" >
-				  				<f:selectItem  itemLabel="selecione Analista"/>
-				  			</p:selectOneMenu>
-			  			</h:panelGroup>
-						
-						<h:panelGroup>
-							<p:outputLabel value="Data Inicio:" for="dataInicio"  size="50" /><br/>
-							<p:calendar id="dataInicio"/>
-				  			
-				  		</h:panelGroup>
-			  			
-			  		</p:panelGrid>
-			  		
-			  		<!-- BARRA DOS BOTÕES -->
-			  		<p:toolbar style="margin-top: 20px">
-			  		
-			  			<p:toolbarGroup align="left" style="padding: 5px;">
-			  				<p:commandButton value="Imprimir Cadastro"/>
-			  				<p:commandButton value="Imprimir Histórico"/>
-			  			</p:toolbarGroup>
-			  			
-			  			<p:toolbarGroup align="right" style="padding: 5px;">
-			  				<p:commandButton value="Adicionar histórico"/>
-			  				<p:commandButton value="salvar"/>
-			  				<p:commandButton value="Editar"/>
-			  				<p:commandButton value="Limpar"/>
-			  			</p:toolbarGroup>
-			  		
-			  		</p:toolbar>  
-			  		
-			  		<!-- TABLE VIEW -->
-			  		<p:tabView style="margin-top: 20px;height: 100%">
-			  		
-			  			<p:tab title="Checkpoints">
-			  			<!-- 
-			  				<p:dataTable columns="3">
-			  				
-			  					<p:column header="id">
-			  						<p:outputLabel value="1"/>
-			  					</p:column>
-			  				
-			  					<p:column header="Tipo Ação">
-			  						<p:outputLabel value="E-mail Enviado"/>
-			  					</p:column>
-			  				
-			  					<p:column header="Descrição">
-			  						<p:outputLabel value="E-mail enviado para o Bruno referente ao projeto."/>
-			  					</p:column>
-			  				
-			  				</p:dataTable>
-			  				 -->
-			  			</p:tab>
-			  			
-			  			<p:tab title="Histórico">
-			  				
-			  			</p:tab>
-			  			
-			  			<p:tab title="Observações">
-			  				
-			  			</p:tab>
-			  		
-			  		</p:tabView>
-		    		
-		    		</p:panelGrid>
-		    		</h:form>
-	    		</h:panelGroup>
-		</p:panelGrid>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 
-    
-</ui:composition> 
+
+	<!-- PAINEL DE CADASTRO DO PROJETOHISTORICO-->
+	<script>
+		function chkPointDialog(xhr, status, args) {
+			if (args.hideDialog) {
+				PF('cadastroDeCheckPointDialog').hide()
+			}
+		}
+
+		function historicoDialog(xhr, status, args) {
+			if (args.hideDialog) {
+				PF('cadastroDeHistoricoDialog').hide()
+			}
+		}
+	</script>
+
+	<h:form id="frmCadastroDeProjetoHistorico">
+		<p:growl id="growl" showDetail="true" sticky="false" life="3000" />
+
+		<p:panel>
+
+			<p:outputPanel>
+				<h:graphicImage library="images" name="logo.png" height="5%"
+					width="5%" />
+				<p:outputLabel value="Cadastro de Histórico/Projeto"
+					style="font-size: 24px!important" />
+			</p:outputPanel>
+
+			<p:panel>
+
+				<p:panelGrid columns="1" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+					<!-- PAINEL DOS DADOS (TOPO) DO CADASTRO DO PROJETO-->
+
+
+					<p:outputPanel>
+						<p:panelGrid columns="4" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-4,ui-grid-col-2"
+							styleClass="ui-panelgrid-blank">
+
+							<p:outputPanel>
+								<p:outputLabel value="Id histórico" for="idHistorico" />
+								<br />
+								<p:inputText id="idHistorico" disabled="true"
+									value="#{projetoHistoricoBean.projetoHistorico.id}"></p:inputText>
+								<br />
+							</p:outputPanel>
+
+							<p:outputPanel>
+								<p:outputLabel value="Nome do projeto" for="nmProjeto" />
+								<br />
+								<p:autoComplete id="nmProjeto"
+									value="#{projetoHistoricoBean.projetoHistorico.projetoHistorico}"
+									completeMethod="#{projetoHistoricoBean.projetoAutoComplete}"
+									var="projeto" itemLabel="#{projeto.nomeProjeto}"
+									itemValue="#{projeto}" converter="projetoConverter" />
+							</p:outputPanel>
+
+							<p:outputPanel>
+								<p:outputLabel value="Nome do Gerente:" for="nomeGerente" />
+								<br />
+								<p:autoComplete id="nomeGerente"
+									value="#{projetoHistoricoBean.projetoHistorico.gerente}"
+									completeMethod="#{projetoHistoricoBean.usuarioGerenteAutoComplete}"
+									var="gerente" itemLabel="#{gerente.nomeUsuario}"
+									itemValue="#{gerente}" converter="usuarioConverter" />
+							</p:outputPanel>
+
+							<p:outputPanel>
+								<p:outputLabel value="Status" for="statusHistorico" />
+								<br />
+								<p:selectOneMenu id="statusHistorico" autoWidth="false"
+									value="#{projetoHistoricoBean.projetoHistorico.statusProjetoHistorico}">
+									<f:selectItem itemLabel="Status" noSelectionOption="true" />
+									<f:selectItems value="#{projetoHistoricoBean.status}"
+										itemLabel="#{status}" var="Sts" itemValue="#{Sts}" />
+								</p:selectOneMenu>
+							</p:outputPanel>
+						</p:panelGrid>
+
+						<p:panelGrid columns="3" layout="grid"
+							columnClasses="ui-grid-col-4,ui-grid-col-2,ui-grid-col-6"
+							styleClass="ui-panelgrid-blank">
+
+							<p:outputPanel>
+								<p:outputLabel value="Nome do Analista:" for="nomeAnalista" />
+								<br />
+								<p:autoComplete id="nomeAnalista"
+									value="#{projetoHistoricoBean.projetoHistorico.analista}"
+									completeMethod="#{projetoHistoricoBean.usuarioAnalistaAutoComplete}"
+									var="analista" itemLabel="#{analista.nomeUsuario}"
+									itemValue="#{analista}" converter="usuarioConverter" />
+							</p:outputPanel>
+
+							<p:outputPanel>
+								<p:outputLabel value="Data Inicio:" for="dataInicio" size="50" />
+								<br />
+								<p:calendar id="dataInicio" pattern="dd/MM/yyyy"
+									value="#{projetoHistoricoBean.projetoHistorico.dataInicio}" />
+							</p:outputPanel>
+
+							<p:outputPanel></p:outputPanel>
+						</p:panelGrid>
+					</p:outputPanel>
+
+					<!-- BARRA DOS BOTÕES -->
+					<p:panel>
+						<p:panelGrid columns="3" layout="grid"
+							columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+							styleClass="ui-panelgrid-blank">
+
+							<p:commandButton value="Adicionar CheckPoint"
+								oncomplete="PF('cadastroDeCheckPointDialog').show()"
+								update=":formDialogs:panelCheck" />
+
+							<p:commandButton value="Adicionar histórico"
+								action="#{projetoHistoricoBean.iniciaHistorioco}"
+								oncomplete="PF('cadastroDeHistoricoDialog').show()"
+								update=":formDialogs:panelHis" />
+
+							<p:commandButton value="salvar" />
+
+						</p:panelGrid>
+
+						<p:panelGrid columns="3" layout="grid"
+							columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
+							styleClass="ui-panelgrid-blank">
+							<p:commandButton value="Imprimir Cadastro" />
+
+							<p:commandButton value="Imprimir Histórico" />
+
+							<p:commandButton value="Limpar" />
+						</p:panelGrid>
+
+					</p:panel>
+
+					<!-- TABLE VIEW -->
+					<p:tabView id="tab">
+
+						<p:tab title="Checkpoints">
+							<p:dataTable
+								value="#{projetoHistoricoBean.projetoHistorico.checkPoints}"
+								var="chkPointHistorico" reflow="true"
+								emptyMessage="Sem novos projetos cadastrados"
+								style="font-size:15px">
+
+								<p:column headerText="Id" style="textalign:center">
+									<h:outputText value="#{chkPointHistorico.id}" />
+								</p:column>
+
+								<p:column headerText="Atividade" style="textalign:center">
+									<h:outputText value="#{chkPointHistorico.descricao}" />
+								</p:column>
+
+								<p:column headerText="Realizada" style="textalign:center">
+									<p:selectBooleanCheckbox value="#{chkPintHistorico.status}" />
+								</p:column>
+
+								<p:column headerText="Alterar" style="textalign:center">
+									<p:commandButton value="Alterar" />
+								</p:column>
+
+								<p:column headerText="Excluir" style="textalign:center">
+									<p:commandButton value="Excluir" />
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+
+						<p:tab title="Histórico">
+							<p:dataTable
+								value="#{projetoHistoricoBean.projetoHistorico.historicos}"
+								var="historico" reflow="true"
+								emptyMessage="Sem novos projetos cadastrados"
+								style="font-size:15px">
+								<p:column style="width:16px">
+									<p:rowToggler />
+								</p:column>
+
+								<p:column headerText="Id">
+									<h:outputText value="#{historico.id}" />
+								</p:column>
+
+								<p:column headerText="Ação">
+									<h:outputText value="#{historico.descricao}" />
+								</p:column>
+
+								<p:column headerText="Excluir">
+									<p:commandButton value="Excluir" />
+								</p:column>
+
+								<p:column headerText="Alterar">
+									<p:commandButton value="Alterar"
+										oncomplete="PF('cadastroDeHistoricoDialog').show()"
+										update=":formDialogs:panelCheck">
+										<f:setPropertyActionListener value="#{historico}"
+											target="#{projetoHistoricoBean.historico}" />
+									</p:commandButton>
+								</p:column>
+
+								<p:rowExpansion>
+									<p:column headerText="Descrição">
+										<p:inputTextarea value="#{historico.conteudo}" />
+									</p:column>
+								</p:rowExpansion>
+							</p:dataTable>
+
+						</p:tab>
+
+						<p:tab title="Observações">
+							<p:panelGrid columns="1" layout="grid"
+								styleClass="ui-panelgrid-blank">
+								<p:outputPanel>
+									<p:outputLabel value="Observações" for="obs" />
+									<br />
+									<p:inputTextarea id="obs" cols="5" rows="10"
+										value="#{projetoHistoricoBean.projetoHistorico.observacoes}" />
+
+								</p:outputPanel>
+							</p:panelGrid>
+						</p:tab>
+
+					</p:tabView>
+				</p:panelGrid>
+			</p:panel>
+		</p:panel>
+	</h:form>
+
+	<h:form id="formDialogs">
+
+		<p:dialog widgetVar="cadastroDeCheckPointDialog"
+			id="cadastroDeCheckPointDialog" header="Cadastro checkPoints"
+			showEffect="clip" hideEffect="clip" width="350" height="100"
+			resizable="false" modal="true">
+			<p:outputPanel id="panelCheck">
+				<p:panelGrid columns="1" layout="grid">
+					<p:outputPanel>
+						<p:outputLabel value="Atividade" for="atividade" />
+						<br />
+						<p:inputText id="atividade"
+							value="#{projetoHistoricoBean.descricaoChkPoint}"></p:inputText>
+						<br />
+					</p:outputPanel>
+
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-9,ui-grid-col-3"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Adicionar" ajax="false"
+						actionListener="#{projetoHistoricoBean.adicionaChkPoint}"
+						oncomplete="PF('cadastroDeCheckPointDialog').hide"
+						update="frmCadastroDeProjetoHistorico:tab" />
+					<p:outputPanel></p:outputPanel>
+				</p:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+
+		<p:dialog widgetVar="cadastroDeHistoricoDialog"
+			id="cadastroDeHistoricoDialog" header="Cadastro Histórico"
+			showEffect="clip" hideEffect="clip" resizable="false" modal="true">
+			<p:outputPanel id="panelHis">
+
+				<p:panelGrid columns="1" layout="grid">
+					<p:outputPanel>
+						<p:outputLabel value="Ação" for="acao" />
+						<br />
+						<p:inputText id="acao"
+							value="#{projetoHistoricoBean.historico.descricao}"></p:inputText>
+						<br />
+					</p:outputPanel>
+
+					<p:outputPanel>
+						<p:outputLabel value="Descrição" for="descricao" />
+						<br />
+						<p:inputTextarea id="descricao"
+							value="#{projetoHistoricoBean.historico.conteudo}"></p:inputTextarea>
+						<br />
+					</p:outputPanel>
+				</p:panelGrid>
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-9,ui-grid-col-3"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Adicionar" ajax="false"
+						actionListener="#{projetoHistoricoBean.adicionaHistorico}"
+						oncomplete="PF('cadastroDeCheckPointDialog').hide"
+						update="frmCadastroDeProjetoHistorico:tab" />
+					<p:outputPanel></p:outputPanel>
+				</p:panelGrid>
+
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+</ui:composition>

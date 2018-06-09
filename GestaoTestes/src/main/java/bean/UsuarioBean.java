@@ -1,5 +1,6 @@
 package bean;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import enumeradores.Status;
 import util.Mensagem;
 import util.PDF;
 
-@ManagedBean(name = "CadastroUsuarioBean")
+@ManagedBean(name = "cadastroUsuarioBean")
 @ViewScoped
 public class UsuarioBean {
 	private Usuario usuario;
@@ -35,19 +36,26 @@ public class UsuarioBean {
 
 	public void salvarUsuario() {
 		boolean jaExisteEmail = false;
+		boolean jaExisteNome = false;
 		try {
 			for (Usuario us : this.usuarios) {
 				if (us.getEmail().equals(usuario.getEmail())) {
 					jaExisteEmail = true;
 					break;
 				}
+				if (us.getNomeUsuario().equals(usuario.getNomeUsuario())) {
+					jaExisteNome = true;
+					break;
+				}
 			}
 			if (jaExisteEmail && usuario.getCodUsuario() == null) {
-				Mensagem.falha("Esse email ja está cadastrado\nNão foi possível salvar");
+				Mensagem.falha(
+						"Esse email já está cadastrado\npesquise caso deseje altera-lo\nNão foi possível salvar");
+			} else if (jaExisteNome) {
+				Mensagem.falha("Esse nome já está cadastrado\npesquise caso deseje altera-lo\nNão foi possível salvar");
 			} else {
 				DaoUsuario.salvar(this.usuario);
-				// this.usuarios = null;
-				Usuario.limparUsuario(this.usuario);
+				this.limparUsuario();
 				this.usuarios = DaoUsuario.listarUsuarios();
 				Mensagem.sucesso("Cadastro salvo com sucesso!");
 			}
@@ -56,11 +64,11 @@ public class UsuarioBean {
 			Mensagem.falha("Não foi possível salvar/n" + e.toString());
 		}
 	}
-	
+
 	public void gerarPdfUsuario() {
-		if(PDF.usuario(this.usuario)) {
+		if (PDF.usuario(this.usuario)) {
 			Mensagem.sucesso("PDF gerado");
-		}else {
+		} else {
 			Mensagem.falha("Não gerou PDF");
 		}
 	}
@@ -78,11 +86,24 @@ public class UsuarioBean {
 					usuariosPesquisados.add(usua);
 				}
 			}
-			if(usuariosPesquisados.size() == 0) {
+			if (usuariosPesquisados.size() == 0) {
 				Mensagem.falha("Usuário não existe");
 			}
 			usuarioPesquisado = null;
 		}
+	}
+
+	public void limparUsuario() {
+		this.usuario = new Usuario();
+		this.usuariosPesquisados = null;
+	}
+
+	@SuppressWarnings("unlikely-arg-type")
+	@Transient
+	public static boolean permisao(Usuario usuario) {
+		if (usuario.getDireitoUsuario().getDireito().equals(DireitoUsuario.ANALISTA))
+			return false;
+		return true;
 	}
 
 	public ArrayList<Usuario> getUsuarios() {
@@ -104,10 +125,11 @@ public class UsuarioBean {
 	public CargoUsuario[] getCargo() {
 		return CargoUsuario.values();
 	}
-
+	
 	public NivelUsuario[] getNivel() {
 		return NivelUsuario.values();
 	}
+
 
 	public Usuario getUsuario() {
 		return usuario;

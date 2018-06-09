@@ -8,7 +8,7 @@ public enum NivelUsuario {
 		this.nivel = nivel;
 	}
 
-	public String getDireito() {
+	public String getNivel() {
 		return this.nivel;
 	}
 }

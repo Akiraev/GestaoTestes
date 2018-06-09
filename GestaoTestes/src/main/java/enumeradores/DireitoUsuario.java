@@ -1,7 +1,7 @@
 package enumeradores;
 
 public enum DireitoUsuario {
-	ANALISTA("Analista"), GERENTE("Ferente");
+	ANALISTA("Analista"), GERENTE("Gerente");
 
 	private String direito;
 
