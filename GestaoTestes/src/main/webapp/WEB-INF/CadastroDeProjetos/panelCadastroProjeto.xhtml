@@ -15,7 +15,7 @@
 			<p:outputPanel>
 				<h:graphicImage library="images" name="logo.png" height="5%"
 					width="5%" />
-				<p:outputLabel value="Cadastro de projeto" style="font-size: 24px" />
+				<p:outputLabel value="Cadastro de projeto" style="font-size: 24px !important" />
 			</p:outputPanel>
 
 			<p:panel>
@@ -48,11 +48,10 @@
 							<p:outputPanel>
 								<p:outputLabel value="Status projeto:" for="statusProjeto" />
 								<br />
-								<p:selectOneMenu id="statusProjeto" autoWidth="false">
+								<p:selectOneMenu id="statusProjeto" autoWidth="false" value="#{cadastroProjetoBean.projeto.statusProjeto}">
 									<f:selectItem itemLabel="-Status-" noSelectionOption="true" />
 									<f:selectItems value="#{cadastroProjetoBean.status}"
-										itemLabel="#{status}" var="Sts" itemValue="#{Sts}" />
-
+										itemLabel="#{Sts.status}" var="Sts" itemValue="#{Sts}" />
 								</p:selectOneMenu>
 							</p:outputPanel>
 						</p:panelGrid>

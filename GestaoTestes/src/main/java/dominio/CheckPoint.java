@@ -5,26 +5,111 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class CheckPoint {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@ManyToOne
+	private Long id;
+	
+	@OneToOne
 	private ProjetoHistorico projetoHistorico;
+	
 	@Column
-	private String descricao;
-	@Column
-	private boolean status;
+	private boolean reuniaoEntendimento;
 
-	public int getId() {
+	@Column
+	private boolean instrumentacao;
+	
+	@Column
+	private boolean performance;
+	
+	@Column
+	private boolean stresTest;
+	
+	@Column
+	private boolean levantamentoRequisitos;
+	@Column
+	
+	private boolean coletaLogs;
+	
+	@Column
+	private boolean capacityPlanner;
+	
+	@Column
+	private boolean entregaRelatório;
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isReuniaoEntendimento() {
+		return reuniaoEntendimento;
+	}
+
+	public void setReuniaoEntendimento(boolean reuniaoEntendimento) {
+		this.reuniaoEntendimento = reuniaoEntendimento;
+	}
+
+	public boolean isInstrumentacao() {
+		return instrumentacao;
+	}
+
+	public void setInstrumentacao(boolean instrumentacao) {
+		this.instrumentacao = instrumentacao;
+	}
+
+	public boolean isPerformance() {
+		return performance;
+	}
+
+	public void setPerformance(boolean performance) {
+		this.performance = performance;
+	}
+
+	public boolean isStresTest() {
+		return stresTest;
+	}
+
+	public void setStresTest(boolean stresTest) {
+		this.stresTest = stresTest;
+	}
+
+	public boolean isLevantamentoRequisitos() {
+		return levantamentoRequisitos;
+	}
+
+	public void setLevantamentoRequisitos(boolean levantamentoRequisitos) {
+		this.levantamentoRequisitos = levantamentoRequisitos;
+	}
+
+	public boolean isColetaLogs() {
+		return coletaLogs;
+	}
+
+	public void setColetaLogs(boolean coletaLogs) {
+		this.coletaLogs = coletaLogs;
+	}
+
+	public boolean isCapacityPlanner() {
+		return capacityPlanner;
+	}
+
+	public void setCapacityPlanner(boolean capacityPlanner) {
+		this.capacityPlanner = capacityPlanner;
+	}
+
+	public boolean isEntregaRelatório() {
+		return entregaRelatório;
+	}
+
+	public void setEntregaRelatório(boolean entregaRelatório) {
+		this.entregaRelatório = entregaRelatório;
 	}
 
 	public ProjetoHistorico getProjetoHistorico() {
@@ -34,21 +119,5 @@ public class CheckPoint {
 	public void setProjetoHistorico(ProjetoHistorico projetoHistorico) {
 		this.projetoHistorico = projetoHistorico;
 	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
+	
 }
