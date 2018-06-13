@@ -1,17 +1,23 @@
 package util;
 
-import enumeradores.Status;
+import dao.DaoProjeto;
+import dao.DaoProjetoHistorico;
+import dao.DaoUsuario;
+import dominio.Projeto;
+import dominio.ProjetoHistorico;
+import dominio.Usuario;
 
 public class Main {
 	public static void main(String[] args) {
-		for(Status a : Status.values()) {
-			System.out.println(a.getStatus());
-		}
+		Projeto p = DaoProjeto.buscaProjeto("Teste de servidor TIM");
 		
-		Long id = 1l;
-		Long id2 = 1l;
-		if(id == id2) {
-			System.out.println("são iguais");
-		}
+		ProjetoHistorico pj = DaoProjetoHistorico.getProjetoHistoricoPorProjeto(p);
+		
+		Usuario analista = DaoUsuario.buscaUsuario("roberto@gmail.com");
+		Usuario gerente = DaoUsuario.buscaUsuario("terry@gmail.com");
+		pj.setAnalista(analista);
+		pj.setGerente(gerente);
+		DaoProjetoHistorico.salvaHistoricoProjeto(pj);
+		
 	}
 }

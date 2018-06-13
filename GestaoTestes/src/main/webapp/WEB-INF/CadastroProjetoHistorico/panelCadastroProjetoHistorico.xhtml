@@ -127,7 +127,7 @@
 							<p:commandButton value="Imprimir Histórico" />
 
 							<p:commandButton value="histórico"
-								actionListener="#{projetoHistoricoBean.novoHistorico}"
+								actionListener="#{projetoHistoricoBean.iniciaHistorioco}"
 								oncomplete="PF('cadastroDeHistoricoDialog').show()"
 								update=":formDialogs:panelHis" />
 
@@ -243,9 +243,12 @@
 								</p:column>
 
 								<p:column headerText="Alterar">
-									<p:commandButton icon=" ui-icon-search"
-										actionListener="#{projetoHistoricoBean.atualizaHistorico}"
-										oncomplete="PF('cadastroDeHistoricoDialog').show()" />
+									<p:commandButton icon=" ui-icon-search"										
+										oncomplete="PF('cadastroDeHistoricoDialog').show()">
+										<f:setPropertyActionListener value="#{historico}"
+											target="#{projetoHistoricoBean.historico}" />
+
+									</p:commandButton>
 								</p:column>
 
 								<p:column headerText="Excluir">
@@ -406,22 +409,15 @@
 
 				</p:panelGrid>
 
-				<p:panelGrid columns="3" layout="grid"
-					columnClasses="ui-grid-col-3,ui-grid-col-6,ui-grid-col-3"
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="ui-grid-col-3,ui-grid-col-9"
 					styleClass="ui-panelgrid-blank">
 
-					<p:commandButton value="Adicionao" id="novo"
-						rendered="#{projetoHistoricoBean.novoHistorico==false? false:true}"
-						action="#{projetoHistoricoBean.adicionaNovoHistorico}"
+					<p:commandButton value="Adicionar histórico"
+						action="#{projetoHistoricoBean.adicionaHistorico}"
 						oncomplete="PF('cadastroDeHistoricoDialog').hide()"
 						update="frmCadastroDeProjetoHistorico" />
-
 					<p:outputPanel></p:outputPanel>
-
-					<p:commandButton value="Adicionarhistórico" id="velho"
-						rendered="#{projetoHistoricoBean.novoHistorico==false? true:false}"
-						oncomplete="PF('cadastroDeHistoricoDialog').hide()"
-						update=":frmCadastroDeProjetoHistorico:tab" />
 
 				</p:panelGrid>
 			</p:outputPanel>

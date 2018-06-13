@@ -19,7 +19,7 @@ public class LoginBean {
 	public String logar() {
 		if (DaoLogin.logar(usuario)) {
 			Mensagem.sucesso("Logado");
-			return "/cadastrousuario.xhtml?faces-redirect=true";
+			return "/dashboard.xhtml?faces-redirect=true";
 			
 		} else {
 			Mensagem.falha("Não logou");

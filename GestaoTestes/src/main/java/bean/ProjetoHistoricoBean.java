@@ -7,8 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import dao.DaoCheckPoint;
-import dao.DaoHistorico;
 import dao.DaoProjeto;
 import dao.DaoProjetoHistorico;
 import dao.DaoUsuario;
@@ -28,8 +26,6 @@ import util.Mensagem;
 @ViewScoped
 public class ProjetoHistoricoBean {
 	private Long id = 0l;
-	private boolean novoHistorico = false;
-	private boolean velhoHistorico = false;
 	private String nomeProjeto;
 	private String nomeCliente;
 	private Historico historico;
@@ -40,6 +36,7 @@ public class ProjetoHistoricoBean {
 	private List<Usuario> usuariosAutoComplete;
 	private List<Projeto> projetosAutoComplete;
 
+	
 	@PostConstruct
 	public void init() {
 		this.historico = new Historico();
@@ -51,14 +48,11 @@ public class ProjetoHistoricoBean {
 		this.usuariosAutoComplete = DaoUsuario.listarUsuariosAtivos();
 	}
 
+	
 	public List<Projeto> projetoAutoComplete(String complete) {
-		if (this.projetosAutoComplete.size() > 0) {
-			System.out.println(this.projetosAutoComplete.get(0).getNomeProjeto());
-		} else {
-			System.out.println("esta vazio");
-		}
 		return this.projetosAutoComplete;
 	}
+	
 
 	public List<Usuario> usuarioGerenteAutoComplete(String complete) {
 		List<Usuario> usuariosGerenteAutoComplete = new ArrayList<>();
@@ -71,6 +65,7 @@ public class ProjetoHistoricoBean {
 		}
 		return usuariosGerenteAutoComplete;
 	}
+	
 
 	public List<Usuario> usuarioAnalistaAutoComplete(String complete) {
 		List<Usuario> usuariosAnalistaAutoComplete = new ArrayList<>();
@@ -81,38 +76,11 @@ public class ProjetoHistoricoBean {
 				usuariosAnalistaAutoComplete.add(u);
 			}
 		}
-
 		return usuariosAnalistaAutoComplete;
-
 	}
 
-	public void adicionaNovoHistorico() {
-
-		Historico historico = new Historico();
-		historico = this.historico;
-		this.historico = new Historico();
-
-		this.id = this.id - 1l;
-		historico.setId(this.id);
-		this.historicoNovo.add(historico);
-
-		if (this.projetoHistorico.getHistoricos() == null) {
-
-			List<Historico> p = new ArrayList<>();
-			p.add(historico);
-			this.projetoHistorico.setHistoricos(p);
-
-		} else {
-
-			this.projetoHistorico.getHistoricos().add(historico);
-
-		}
-		this.historico = null;
-		this.novoHistorico = false;
-
-	}
-
-	public void alteraHistorico(Historico historicoSelecionado) {
+	
+	public void adicionaHistorico() {
 		Historico historico = new Historico();
 		List<Historico> historicos = new ArrayList<Historico>();
 		historico = this.historico;
@@ -129,29 +97,24 @@ public class ProjetoHistoricoBean {
 			for (Historico h : this.projetoHistorico.getHistoricos()) {
 
 				if (h.getId() == historico.getId() && h.getId() > 0) {
-
 					this.historicoAlterado.add(historico);
 					this.projetoHistorico.getHistoricos().remove(h);
 					historicos.add(historico);
 
 				} else if (h.getId() == historico.getId() && h.getId() < 0) {
-
 					this.projetoHistorico.getHistoricos().remove(h);
 					historicos.add(historico);
 
 				} else {
-
 					historicos.add(h);
-
 				}
 			}
 		}
-
 		this.projetoHistorico.setHistoricos(historicos);
-		this.historico = null;
-
+		//this.historico = null;
 	}
 
+	
 	public void salvaProjetoHistorico() {
 		Projeto projeto = DaoProjeto.buscaProjeto(this.projetoHistorico.getProjeto().getNomeProjeto());
 
@@ -161,15 +124,15 @@ public class ProjetoHistoricoBean {
 
 		} else {
 
-			for (Historico h : this.projetoHistorico.getHistoricos()) {
+			/*for (Historico h : this.projetoHistorico.getHistoricos()) {
 				if (h.getId() < 0) {
 					this.projetoHistorico.getHistoricos().remove(h);
 				}
 			}
-
+*/
 			DaoProjetoHistorico.salvaHistoricoProjeto(this.projetoHistorico);
 
-			ProjetoHistorico provisorio = DaoProjetoHistorico
+			/*ProjetoHistorico provisorio = DaoProjetoHistorico
 					.getProjetoHistoricoPorProjeto(this.projetoHistorico.getProjeto());
 
 			if (provisorio != null) {
@@ -196,8 +159,9 @@ public class ProjetoHistoricoBean {
 						DaoHistorico.salvaHistorico(h);
 					}
 				}
-			}
-			this.limparCampos();
+			}*/
+			//this.limparCampos();
+			Mensagem.sucesso("Projeto salvo com sucesso!");
 		}
 	}
 
@@ -211,16 +175,8 @@ public class ProjetoHistoricoBean {
 		this.historicoNovo = new ArrayList<>();
 	}
 
-	public void novoHistorico() {
-		this.novoHistorico = true;
-		this.velhoHistorico = false;
+	public void iniciaHistorioco() {
 		this.historico = new Historico();
-
-	}
-
-	public void atualizaHistorico() {
-		this.novoHistorico = false;
-		this.velhoHistorico = true;
 	}
 
 	public Status[] getStatus() {
@@ -295,19 +251,4 @@ public class ProjetoHistoricoBean {
 		this.nomeCliente = nomeCliente;
 	}
 
-	public boolean isNovoHistorico() {
-		return novoHistorico;
-	}
-
-	public void setNovoHistorico(boolean novoHistorico) {
-		this.novoHistorico = novoHistorico;
-	}
-
-	public boolean isVelhoHistorico() {
-		return velhoHistorico;
-	}
-
-	public void setVelhoHistorico(boolean velhoHistorico) {
-		this.velhoHistorico = velhoHistorico;
-	}
 }
