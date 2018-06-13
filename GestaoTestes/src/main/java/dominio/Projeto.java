@@ -42,10 +42,10 @@ public class Projeto {
 	@Column(nullable = false)
 	private Date dataProjetoFim;
 
-	@Column(nullable = false)
+	@Column
 	private Date dataFimEfetivo;
 
-	@OneToOne(mappedBy="projetoHistorico")
+	@OneToOne(mappedBy="projeto")
 	private ProjetoHistorico projetoHistorico;
 
 	public Projeto() {

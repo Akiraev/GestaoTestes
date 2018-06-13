@@ -17,7 +17,7 @@ public class ProjetoConverter implements Converter {
 			return null;
 		} else {
 			try {
-				return DaoProjeto.buscaBuscaProjetoHistoricoPeloNome(nomeProjeto);				
+				return DaoProjeto.buscaProjeto(nomeProjeto);				
 			} catch (Exception e) {
 				throw new ConverterException("Erro no projeto converter\n" + e.getMessage());
 			}

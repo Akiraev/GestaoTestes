@@ -7,9 +7,12 @@ private String uf;
 	UF(String uf) {
 		this.uf = uf;
 	}
-	
-	public String getUF() {
-		return this.uf;
+		
+	public String getUf() {
+		return uf;
 	}
 
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
 }

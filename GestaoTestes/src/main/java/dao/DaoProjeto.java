@@ -8,7 +8,6 @@ import javax.persistence.Query;
 
 import dominio.Projeto;
 import dominio.ProjetoHistorico;
-import dominio.Usuario;
 import enumeradores.Status;
 import factory.ManageFactory;
 
@@ -76,6 +75,7 @@ public class DaoProjeto {
 			query.setParameter("nome", nomeProjeto);
 
 			projeto = (Projeto) query.getSingleResult();
+			
 			return projeto;
 
 		} catch (Exception e) {
@@ -145,24 +145,4 @@ public class DaoProjeto {
 		return null;
 	}
 
-	public static Projeto buscaBuscaProjetoHistoricoPeloNome(String nomeProjeto) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
-		Projeto projeto = new Projeto();
-
-		try {
-			Query query = entityManager.createQuery("Select proj from Usuario usu where proj.nomeProjeto = :nomeProjeto",
-					Usuario.class);
-			query.setParameter("nomeProjeto", nomeProjeto);
-
-			projeto = (Projeto) query.getSingleResult();
-			return projeto;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			entityManager.close();
-		}
-		return null;
-
-	}
 }

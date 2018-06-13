@@ -21,7 +21,7 @@ import enumeradores.Status;
 public class ProjetoHistorico {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 
 	@ManyToOne
 	private Usuario analista;
@@ -34,10 +34,10 @@ public class ProjetoHistorico {
 	private Status statusProjetoHistorico;
 
 	@OneToOne(optional=false)
-	private Projeto projetoHistorico;
+	private Projeto projeto;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projetoHistorico")
-	private List<CheckPoint> checkPoints;
+	@OneToOne(mappedBy="projetoHistorico")
+	private CheckPoint checkPoint;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "projetoHistorico")
 	private List<Historico> historicos;
@@ -48,10 +48,7 @@ public class ProjetoHistorico {
 	@Column
 	private String Observacoes;
 	
-	public void addCheck(CheckPoint chk) {
-		this.checkPoints.add(chk);
-	}
-
+	
 	public Date getDataInicio() {
 		return dataInicio;
 	}
@@ -60,11 +57,11 @@ public class ProjetoHistorico {
 		this.dataInicio = dataInicio;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -90,22 +87,22 @@ public class ProjetoHistorico {
 
 	public void setStatusProjetoHistorico(Status statusProjetoHistorico) {
 		this.statusProjetoHistorico = statusProjetoHistorico;
+	}	
+
+	public Projeto getProjeto() {
+		return projeto;
 	}
 
-	public Projeto getProjetoHistorico() {
-		return projetoHistorico;
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
 	}
 
-	public void setProjetoHistorico(Projeto projetoHistorico) {
-		this.projetoHistorico = projetoHistorico;
+	public CheckPoint getCheckPoint() {
+		return checkPoint;
 	}
 
-	public List<CheckPoint> getCheckPoints() {
-		return checkPoints;
-	}
-
-	public void setCheckPoints(List<CheckPoint> checkPoints) {
-		this.checkPoints = checkPoints;
+	public void setCheckPoint(CheckPoint checkPoint) {
+		this.checkPoint = checkPoint;
 	}
 
 	public List<Historico> getHistoricos() {
