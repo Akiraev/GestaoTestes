@@ -30,10 +30,10 @@ public class ProjetoHistorico {
 	private Usuario Gerente;
 
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 10)
+	@Column
 	private Status statusProjetoHistorico;
 
-	@OneToOne(optional=false)
+	@OneToOne
 	private Projeto projeto;
 
 	@OneToOne(mappedBy="projetoHistorico")

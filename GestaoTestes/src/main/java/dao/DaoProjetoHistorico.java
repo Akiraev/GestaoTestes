@@ -57,20 +57,24 @@ public class DaoProjetoHistorico {
 		} finally {
 			entityManager.close();
 		}
+		
 		return false;
+		
 	}
+
 	
+
 	public static ProjetoHistorico getProjetoHistoricoPorProjeto(Projeto projeto) {
 		EntityManager entityManager = ManageFactory.getEntityManager();
 		ProjetoHistorico projetoHistorico = new ProjetoHistorico();
-
+		
 		try {
-			Query query = entityManager.createQuery("Select a from ProjetoHistorico a where a.projeto.codProjeto = :projetoId",
-					ProjetoHistorico.class);
+			Query query = entityManager.createQuery(
+					"Select a from ProjetoHistorico a where a.projeto.codProjeto = :projetoId", ProjetoHistorico.class);
 			query.setParameter("projetoId", projeto.getCodProjeto());
 
 			projetoHistorico = (ProjetoHistorico) query.getSingleResult();
-			
+
 			return projetoHistorico;
 
 		} catch (Exception e) {
