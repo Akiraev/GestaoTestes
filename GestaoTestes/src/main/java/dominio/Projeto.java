@@ -1,15 +1,19 @@
 package dominio;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import enumeradores.Status;
@@ -31,6 +35,12 @@ public class Projeto {
 
 	@ManyToOne
 	private Usuario gerente;
+	
+	@OneToMany(mappedBy="projeto",cascade=CascadeType.ALL)
+	private List<Historico> Historicos;
+	
+	@OneToOne(mappedBy="projeto")
+	private CheckPoint checkPoint;
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 10)
@@ -44,13 +54,9 @@ public class Projeto {
 
 	@Column
 	private Date dataFimEfetivo;
-
-	@OneToOne(mappedBy="projeto")
-	private ProjetoHistorico projetoHistorico;
-
-	public Projeto() {
-
-	}
+	
+	@Column
+	private String observacoes;
 
 	public Long getCodProjeto() {
 		return codProjeto;
@@ -124,12 +130,28 @@ public class Projeto {
 		this.gerente = gerente;
 	}
 
-	public ProjetoHistorico getProjetoHistorico() {
-		return projetoHistorico;
+	public List<Historico> getHistoricos() {
+		return Historicos;
 	}
 
-	public void setProjetoHistorico(ProjetoHistorico projetoHistorico) {
-		this.projetoHistorico = projetoHistorico;
+	public void setHistoricos(List<Historico> historicos) {
+		Historicos = historicos;
+	}
+
+	public CheckPoint getCheckPoint() {
+		return checkPoint;
+	}
+
+	public void setCheckPoint(CheckPoint checkPoint) {
+		this.checkPoint = checkPoint;
+	}
+
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
 	}
 
 }

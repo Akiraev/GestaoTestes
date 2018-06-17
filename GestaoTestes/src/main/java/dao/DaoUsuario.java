@@ -8,7 +8,7 @@ import javax.persistence.Query;
 
 import dominio.Usuario;
 import enumeradores.Status;
-import factory.ManageFactory;
+import factory.HibernateManageFactory;
 
 public class DaoUsuario {
 
@@ -20,7 +20,7 @@ public class DaoUsuario {
 	}
 
 	public static boolean persist(Usuario usuario) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		if (usuario.getEmail() != null) {
 			try {
@@ -44,7 +44,7 @@ public class DaoUsuario {
 	}
 
 	public static boolean alterar(Usuario usuario) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		entityManager.find(Usuario.class, usuario.getCodUsuario());
 		
 		try {
@@ -65,7 +65,7 @@ public class DaoUsuario {
 	}
 
 	public static void excluir(String email) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		try {
 
@@ -89,7 +89,7 @@ public class DaoUsuario {
 	}
 
 	public static Usuario buscaUsuario(String email) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		Usuario usuario = new Usuario();
 
 		try {
@@ -109,7 +109,7 @@ public class DaoUsuario {
 
 	
 	public static Usuario buscaUsuarioPeloNome(String nomeUsuario) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		Usuario usuario = new Usuario();
 
 		try {
@@ -130,7 +130,7 @@ public class DaoUsuario {
 	
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Usuario> listarUsuarios() {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		ArrayList<Usuario> usuarios;
 
 		try {
@@ -152,7 +152,7 @@ public class DaoUsuario {
 	
 	@SuppressWarnings("unchecked")
 	public static List<Usuario> listarUsuariosAtivos() {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		try {
 			Query q = entityManager.createQuery("select usu from Usuario usu where usu.statusUsuario = :status",

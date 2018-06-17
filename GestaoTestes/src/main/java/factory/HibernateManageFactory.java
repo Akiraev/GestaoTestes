@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class ManageFactory implements Closeable{
+public class HibernateManageFactory implements Closeable{
 	private static final EntityManagerFactory EMF = Persistence.createEntityManagerFactory("default");
 
 	public static EntityManager getEntityManager() {

@@ -1,11 +1,11 @@
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      			xmlns:h="http://java.sun.com/jsf/html"
-      			xmlns:f="http://java.sun.com/jsf/core"
-      			xmlns:ui="http://java.sun.com/jsf/facelets"
-      			xmlns:p="http://primefaces.org/ui">
-  
-  	
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
 	<!-- PAINEL E PESQUISA DO HISTORICO -->
 	<h:form id="frmPesquisaHistorico">
 		<p:panel>
@@ -14,32 +14,37 @@
 				<p:outputPanel>
 					<h:graphicImage library="images" name="lupa.png" height="15%"
 						width="15%" />
-					<p:outputLabel value="Pesquisar" style="font-size: 24px !Important" />
+					<p:outputLabel value="Pesquisar Projeto"
+						style="font-size: 20px !Important" />
 				</p:outputPanel>
 
 				<p:outputPanel>
 					<p:outputLabel value="Nome do Cliente" for="nomeCliente" />
-					<p:inputText id="nomeCliente" value="#{cadastroProjetoBean.projetoPesquisado}" />
-				</p:outputPanel>
-				
-				<p:outputPanel>
-					<p:outputLabel value="Nome do Projeto" for="nomeProjeto" />
-					<p:inputText id="nomeProjeto" value="#{cadastroProjetoBean.projetoPesquisado}" />
-				</p:outputPanel>
-				
-				<p:outputPanel>
-					<p:commandButton value="Pesquisar" 
-					action="#{cadastroProjetoBean.buscarProjetos}" ajax="false"/>
+					<p:inputText id="nomeCliente"
+						value="#{projetoHistoricoBean.nomeCliente}" />
 				</p:outputPanel>
 
 				<p:outputPanel>
-					<h:dataTable value="#{cadastroProjetoBean.projetosPesquisados}"
+					<p:outputLabel value="Nome do Projeto" for="nomeProjeto" />
+					<p:inputText id="nomeProjeto"
+						value="#{projetoHistoricoBean.nomeProjeto}" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<p:commandButton value="Pesquisar"
+						action="#{projetoHistoricoBean.buscarProjeto}" 
+						update="frmPesquisaHistorico" />
+				</p:outputPanel>
+
+				<p:outputPanel>
+					<h:dataTable value="#{projetoHistoricoBean.projetosPesquisado}"
 						var="projeto">
 						<h:column>
 							<h:commandLink value="#{projeto.nomeProjeto}"
-								style="text-decoration:none;">
+								style="text-decoration:none;" >
 								<f:setPropertyActionListener value="#{projeto}"
-									target="#{cadastroProjetoBean.projeto}" />
+									target="#{projetoHistoricoBean.projeto}" />
+									<p:ajax update="frmCadastroDeProjetoHistorico"/>
 							</h:commandLink>
 						</h:column>
 					</h:dataTable>
@@ -47,5 +52,5 @@
 			</p:panelGrid>
 		</p:panel>
 	</h:form>
-    
-</ui:composition> 
+
+</ui:composition>

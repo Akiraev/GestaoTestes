@@ -14,12 +14,12 @@ import dao.DaoUsuario;
 import dominio.Cliente;
 import dominio.Projeto;
 import dominio.Usuario;
-import factory.ManageFactory;
+import factory.HibernateManageFactory;
 
 public class Tst {
 
 	public static void main(String[] args) throws ParseException {
-		EntityManager emf = ManageFactory.getEntityManager();
+		EntityManager emf = HibernateManageFactory.getEntityManager();
 		if (emf != null) {
 			ArrayList<Cliente> cli = (ArrayList<Cliente>) DaoCliente.listarClientesAtivos();
 			for (Cliente c : cli) {

@@ -6,22 +6,23 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.hibernate.Hibernate;
+
 import dominio.Projeto;
-import dominio.ProjetoHistorico;
 import enumeradores.Status;
-import factory.ManageFactory;
+import factory.HibernateManageFactory;
 
 public class DaoProjeto {
 
-	public static void salvar(Projeto projeto) {
+	public static boolean salvar(Projeto projeto) {
 		if (projeto.getCodProjeto() != null)
-			DaoProjeto.alterar(projeto);
+			return DaoProjeto.alterar(projeto);
 		else
-			DaoProjeto.persist(projeto);
+			return DaoProjeto.persist(projeto);
 	}
 
-	public static boolean persist(Projeto projeto) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+	private static boolean persist(Projeto projeto) {
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		if (projeto.getNomeProjeto() != null) {
 			try {
@@ -44,8 +45,8 @@ public class DaoProjeto {
 
 	}
 
-	public static boolean alterar(Projeto projeto) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+	private static boolean alterar(Projeto projeto) {
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		entityManager.find(Projeto.class, projeto.getCodProjeto());
 
 		try {
@@ -66,7 +67,7 @@ public class DaoProjeto {
 	}
 
 	public static Projeto buscaProjeto(String nomeProjeto) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		Projeto projeto = new Projeto();
 
 		try {
@@ -75,7 +76,7 @@ public class DaoProjeto {
 			query.setParameter("nome", nomeProjeto);
 
 			projeto = (Projeto) query.getSingleResult();
-			
+
 			return projeto;
 
 		} catch (Exception e) {
@@ -86,28 +87,9 @@ public class DaoProjeto {
 		return null;
 	}
 
-	public static ProjetoHistorico buscaProjetoHistorico() {
-		EntityManager entityManager = ManageFactory.getEntityManager();
-		ProjetoHistorico projetoHistorico = new ProjetoHistorico();
-
-		try {			
-			Query query = entityManager.createQuery("Select a from ProjetoHistorico",
-					Projeto.class);			
-
-			projetoHistorico = (ProjetoHistorico) query.getSingleResult();
-			return projetoHistorico;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			entityManager.close();
-		}
-		return null;
-	}
-	
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Projeto> listarProjetos() {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		ArrayList<Projeto> usuarios;
 
 		try {
@@ -129,7 +111,7 @@ public class DaoProjeto {
 
 	@SuppressWarnings("unchecked")
 	public static List<Projeto> listarProjetosAtivos() {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		try {
 			Query q = entityManager.createQuery("select proj from Projeto proj where proj.statusProjeto = :status",
@@ -143,6 +125,48 @@ public class DaoProjeto {
 			entityManager.close();
 		}
 		return null;
+	}
+
+	public static List<Projeto> listarProjetosAtivosHistoricos() {
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
+
+		try {
+			Query q = entityManager.createQuery("select proj from Projeto proj where proj.statusProjeto = :status",
+					Projeto.class);
+			q.setParameter("status", Status.ATIVO);
+
+			@SuppressWarnings("unchecked")
+			List<Projeto> projetos = q.getResultList();
+			for (int i = 0; i < projetos.size(); i++) {
+				Hibernate.initialize(projetos.get(i).getHistoricos());
+			}
+			return projetos;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			entityManager.close();
+		}
+		return null;
+	}
+
+	public static Projeto buscaProjetoLazy(Projeto projetoLazy) {
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
+
+		try {
+			Projeto projetoEager = entityManager.find(Projeto.class, projetoLazy.getCodProjeto());
+			Hibernate.initialize(projetoEager.getHistoricos());
+			return projetoEager;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			entityManager.getTransaction().rollback();
+
+		} finally {
+			entityManager.close();
+		}
+		return null;
+
 	}
 
 }

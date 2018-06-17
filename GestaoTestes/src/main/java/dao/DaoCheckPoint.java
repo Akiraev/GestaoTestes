@@ -3,21 +3,21 @@ package dao;
 import javax.persistence.EntityManager;
 
 import dominio.CheckPoint;
-import factory.ManageFactory;
+import factory.HibernateManageFactory;
 
 public class DaoCheckPoint {
 	
-	public static void salvaCheckPoint(CheckPoint checkPoint) {
+	public static boolean salvaCheckPoint(CheckPoint checkPoint) {
 		if (checkPoint.getId() != null)
-			DaoCheckPoint.alterar(checkPoint);
+			return DaoCheckPoint.alterar(checkPoint);
 		else
-			DaoCheckPoint.persist(checkPoint);
+			return DaoCheckPoint.persist(checkPoint);
 
 	}
 
-	public static boolean persist(CheckPoint checkPoint) {
+	private static boolean persist(CheckPoint checkPoint) {
 
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		try {
 			entityManager.getTransaction().begin();
@@ -37,9 +37,9 @@ public class DaoCheckPoint {
 
 	}
 
-	public static boolean alterar(CheckPoint checkPoint) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
-		entityManager.find(CheckPoint.class, checkPoint);
+	private static boolean alterar(CheckPoint checkPoint) {
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
+		entityManager.find(CheckPoint.class, checkPoint.getId());
 
 		try {
 			entityManager.getTransaction().begin();

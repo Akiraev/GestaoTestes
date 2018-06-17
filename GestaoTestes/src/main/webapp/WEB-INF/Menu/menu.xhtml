@@ -13,7 +13,7 @@
 					<p:outputPanel>
 						<div>
 							<p:graphicImage library="images" name="menu.png" height="15%"
-								styleClass="mnImg" width="15%" onclick="PF('sidebar1').show()" />
+								styleClass="mnImg" width="15%" onmousemove="PF('sidebar1').show()" />
 						</div>
 						<p:outputLabel value="MENU" style="color:#ffffff"></p:outputLabel>
 					</p:outputPanel>
@@ -26,26 +26,25 @@
 						<p:graphicImage library="images" name="usuNull.png" height="15%"
 							width="15%" />
 					</p:outputPanel>
-
-					<p:sidebar widgetVar="sidebar1" baseZIndex="10000">
-						<h1 style="font-weight: normal">Menu</h1>
-
-						<p:commandButton value="Dashboard"
-							action="#{menuBean.menuDash}" update="@all" />
-							
-						<p:commandButton value="Cadastro de usuario"
-							action="#{menuBean.menuUsuario}" update="@all" />
-
-						<p:commandButton value="Cadastro de Projeto"
-							action="#{menuBean.menuProjeto}" update="@all" />
-
-						<p:commandButton value="Cadastro de Cliente"
-							action="#{menuBean.menuCliente}" update="@all" />
-
-						<p:commandButton value="Cadastro de Historico"
-							action="#{menuBean.menuProjetoHistorico}" update="@all" />
-					</p:sidebar>
 				</p:panelGrid>
+				<p:sidebar widgetVar="sidebar1" baseZIndex="10000">
+					<h1 style="font-weight: normal">Menu</h1>
+
+					<p:commandButton value="Dashboard" action="#{menuBean.menuDash}"
+						update="@all" />
+
+					<p:commandButton value="Cadastro de usuario"
+						action="#{menuBean.menuUsuario}" update="@all" />
+
+					<p:commandButton value="Cadastro de Projeto"
+						action="#{menuBean.menuProjeto}" update="@all" />
+
+					<p:commandButton value="Cadastro de Cliente"
+						action="#{menuBean.menuCliente}" update="@all" />
+
+					<p:commandButton value="Cadastro de Historico"
+						action="#{menuBean.menuProjetoHistorico}" update="@all" />
+				</p:sidebar>
 			</div>
 		</p:outputPanel>
 
