@@ -4,7 +4,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import dao.DaoLogin;
+import dao.DaoUsuario;
 import dominio.Usuario;
+import enumeradores.AtributesSession;
+import factory.SessionContextFactory;
 import util.Mensagem;
 
 @ManagedBean(name = "loginBean")
@@ -18,15 +21,16 @@ public class LoginBean {
 
 	public String logar() {
 		if (DaoLogin.logar(usuario)) {
-			Mensagem.sucesso("Logado");
+			SessionContextFactory.getInstance().setAttribute(AtributesSession.USUARIO_LOGADO.getValue(),
+					DaoUsuario.buscaUsuario(usuario.getEmail()));
 			return "/dashboard.xhtml?faces-redirect=true";
-			
+
 		} else {
 			Mensagem.falha("Não logou");
 			return "";
 		}
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}

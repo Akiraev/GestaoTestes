@@ -13,7 +13,8 @@
 					<p:outputPanel>
 						<div>
 							<p:graphicImage library="images" name="menu.png" height="15%"
-								styleClass="mnImg" width="15%" onmousemove="PF('sidebar1').show()" />
+								styleClass="mnImg" width="15%"
+								onmousemove="PF('sidebar1').show()" />
 						</div>
 						<p:outputLabel value="MENU" style="color:#ffffff"></p:outputLabel>
 					</p:outputPanel>
@@ -22,7 +23,7 @@
 					</p:outputPanel>
 
 					<p:outputPanel>
-						<p:outputLabel value="Olá, Roberto " style="color:#ffffff"></p:outputLabel>
+						<p:outputLabel value="#{menuBean.usuarioLogado} " style="color:#ffffff; margin-right:5px;"></p:outputLabel>
 						<p:graphicImage library="images" name="usuNull.png" height="15%"
 							width="15%" />
 					</p:outputPanel>
@@ -44,6 +45,9 @@
 
 					<p:commandButton value="Cadastro de Historico"
 						action="#{menuBean.menuProjetoHistorico}" update="@all" />
+						
+					<p:commandButton value="Sair"
+						action="#{menuBean.menuSair}" update="@all" />
 				</p:sidebar>
 			</div>
 		</p:outputPanel>
