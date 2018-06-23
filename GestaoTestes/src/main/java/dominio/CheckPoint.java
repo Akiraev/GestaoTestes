@@ -14,8 +14,8 @@ public class CheckPoint {
 	private Long id;
 	
 	@OneToOne
-	private ProjetoHistorico projetoHistorico;
-	
+	private Projeto projeto;
+		
 	@Column
 	private boolean reuniaoEntendimento;
 
@@ -112,12 +112,11 @@ public class CheckPoint {
 		this.entregaRelatório = entregaRelatório;
 	}
 
-	public ProjetoHistorico getProjetoHistorico() {
-		return projetoHistorico;
+	public Projeto getProjeto() {
+		return projeto;
 	}
 
-	public void setProjetoHistorico(ProjetoHistorico projetoHistorico) {
-		this.projetoHistorico = projetoHistorico;
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
 	}
-	
 }

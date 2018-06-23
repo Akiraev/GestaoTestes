@@ -7,16 +7,15 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import dao.DaoCheckPoint;
+import dao.DaoHistorico;
 import dao.DaoProjeto;
-import dao.DaoProjetoHistorico;
 import dao.DaoUsuario;
 import dominio.CheckPoint;
 import dominio.Historico;
 import dominio.Projeto;
-import dominio.ProjetoHistorico;
 import dominio.Usuario;
 import enumeradores.AcaoHistorico;
-import enumeradores.DireitoUsuario;
 import enumeradores.Status;
 import enumeradores.StatusHistorioco;
 import enumeradores.TipoAcaoHistorico;
@@ -25,158 +24,178 @@ import util.Mensagem;
 @ManagedBean(name = "projetoHistoricoBean")
 @ViewScoped
 public class ProjetoHistoricoBean {
-	private Long id = 0l;
 	private String nomeProjeto;
 	private String nomeCliente;
 	private Historico historico;
-	private CheckPoint checkPoint;
-	private ProjetoHistorico projetoHistorico;
-	private List<Historico> historicoAlterado;
-	private List<Historico> historicoNovo;
 	private List<Usuario> usuariosAutoComplete;
-	private List<Projeto> projetosAutoComplete;
+	private List<Projeto> projetosPesquisado;
+	private List<Projeto> projetos;
+	private List<Historico> historicos;
+	private Projeto projeto;
 
-	
 	@PostConstruct
 	public void init() {
 		this.historico = new Historico();
-		this.checkPoint = new CheckPoint();
-		this.historicoNovo = new ArrayList<>();
-		this.historicoAlterado = new ArrayList<>();
-		this.projetoHistorico = new ProjetoHistorico();
-		this.projetosAutoComplete = DaoProjeto.listarProjetosAtivos();
+		this.projetos = DaoProjeto.listarProjetosAtivos();
 		this.usuariosAutoComplete = DaoUsuario.listarUsuariosAtivos();
 	}
 
-	
-	public List<Projeto> projetoAutoComplete(String complete) {
-		return this.projetosAutoComplete;
-	}
-	
-
-	public List<Usuario> usuarioGerenteAutoComplete(String complete) {
-		List<Usuario> usuariosGerenteAutoComplete = new ArrayList<>();
-		for (Usuario usuGe : this.usuariosAutoComplete) {
-			if (usuGe.getDireitoUsuario().equals(DireitoUsuario.GERENTE)) {
-				Usuario u = new Usuario();
-				u = usuGe;
-				usuariosGerenteAutoComplete.add(u);
-			}
-		}
-		return usuariosGerenteAutoComplete;
-	}
-	
-
-	public List<Usuario> usuarioAnalistaAutoComplete(String complete) {
-		List<Usuario> usuariosAnalistaAutoComplete = new ArrayList<>();
-		for (Usuario usuAna : this.usuariosAutoComplete) {
-			if (usuAna.getDireitoUsuario().equals(DireitoUsuario.ANALISTA)) {
-				Usuario u = new Usuario();
-				u = usuAna;
-				usuariosAnalistaAutoComplete.add(u);
-			}
-		}
-		return usuariosAnalistaAutoComplete;
-	}
-
-	
-	public void adicionaHistorico() {
-		Historico historico = new Historico();
-		List<Historico> historicos = new ArrayList<Historico>();
-		historico = this.historico;
-
-		if (historico.getId() == null) {
-			this.id = this.id - 1l;
-			historico.setId(this.id);
-			this.historicoNovo.add(historico);
-			historicos.add(historico);
-		}
-
-		if (this.projetoHistorico.getHistoricos() != null) {
-
-			for (Historico h : this.projetoHistorico.getHistoricos()) {
-
-				if (h.getId() == historico.getId() && h.getId() > 0) {
-					this.historicoAlterado.add(historico);
-					this.projetoHistorico.getHistoricos().remove(h);
-					historicos.add(historico);
-
-				} else if (h.getId() == historico.getId() && h.getId() < 0) {
-					this.projetoHistorico.getHistoricos().remove(h);
-					historicos.add(historico);
-
-				} else {
-					historicos.add(h);
-				}
-			}
-		}
-		this.projetoHistorico.setHistoricos(historicos);
-		//this.historico = null;
-	}
-
-	
-	public void salvaProjetoHistorico() {
-		Projeto projeto = DaoProjeto.buscaProjeto(this.projetoHistorico.getProjeto().getNomeProjeto());
-
-		if (projeto.getProjetoHistorico() != null && this.projetoHistorico.getId() == null) {
-
-			Mensagem.falha("Esse projeto já possui um histórioco./nFaça uma busca para altera-lo");
+	public void buscarProjeto() {
+		if ((this.nomeCliente.isEmpty() || this.nomeCliente == null)
+				&& (this.nomeProjeto.isEmpty() || this.nomeProjeto == null)) {
+			Mensagem.falha("Necessário preencher nome do projeto ou\n cliente para realizar busca.");
 
 		} else {
 
-			/*for (Historico h : this.projetoHistorico.getHistoricos()) {
-				if (h.getId() < 0) {
-					this.projetoHistorico.getHistoricos().remove(h);
+			if (this.projetos == null || this.projetos.size() <= 0) {
+				Mensagem.falha("Não existe projetos cadastrados");
+
+			} else {
+
+				this.projetosPesquisado = new ArrayList<>();
+
+				if (!(this.nomeCliente.isEmpty() || this.nomeCliente == null)
+						&& !(this.nomeProjeto.isEmpty() || this.nomeProjeto == null)) {
+
+					for (Projeto p : this.projetos) {
+
+						if (p.getCliente().getNomeCliente().toLowerCase().contains(this.nomeCliente.toLowerCase())
+								|| p.getNomeProjeto().toLowerCase().contains(this.nomeProjeto.toLowerCase())) {
+
+							p = DaoProjeto.buscaProjetoLazy(p);
+
+							if (p.getCheckPoint() == null)
+								p.setCheckPoint(new CheckPoint());
+
+							this.projetosPesquisado.add(p);
+						}
+					}
+
+				} else if (!(this.nomeCliente.isEmpty() || this.nomeCliente == null)) {
+
+					for (Projeto p : this.projetos) {
+
+						if (p.getCliente().getNomeCliente().toLowerCase().contains(this.nomeCliente.toLowerCase())) {
+							p = DaoProjeto.buscaProjetoLazy(p);
+
+							if (p.getCheckPoint() == null)
+								p.setCheckPoint(new CheckPoint());
+
+							this.projetosPesquisado.add(p);
+
+						}
+					}
+
+				} else if (!(this.nomeProjeto.isEmpty() || this.nomeProjeto == null)) {
+
+					for (Projeto p : this.projetos) {
+
+						if (p.getNomeProjeto().toLowerCase().contains(this.nomeProjeto.toLowerCase())) {
+							p = DaoProjeto.buscaProjetoLazy(p);
+
+							if (p.getCheckPoint() == null)
+								p.setCheckPoint(new CheckPoint());
+
+							this.projetosPesquisado.add(p);
+
+						}
+					}
 				}
+
+				if (this.projetosPesquisado.size() <= 0) {
+
+					Mensagem.falha("Não existe projetos ou clientes com esse nome.");
+
+				}
+
+				this.nomeCliente = null;
+				this.nomeProjeto = null;
 			}
-*/
-			DaoProjetoHistorico.salvaHistoricoProjeto(this.projetoHistorico);
-
-			/*ProjetoHistorico provisorio = DaoProjetoHistorico
-					.getProjetoHistoricoPorProjeto(this.projetoHistorico.getProjeto());
-
-			if (provisorio != null) {
-
-				if (this.checkPoint.getId() != null) {
-
-					DaoCheckPoint.salvaCheckPoint(this.checkPoint);
-
-				} else {
-
-					this.checkPoint.setProjetoHistorico(provisorio);
-					DaoCheckPoint.salvaCheckPoint(this.checkPoint);
-				}
-
-				if (this.historicoAlterado.size() > 0) {
-					for (Historico h : this.historicoAlterado) {
-						DaoHistorico.salvaHistorico(h);
-					}
-				}
-
-				if (this.historicoNovo.size() > 0) {
-					for (Historico h : this.historicoNovo) {
-						h.setProjetoHistorico(provisorio);
-						DaoHistorico.salvaHistorico(h);
-					}
-				}
-			}*/
-			//this.limparCampos();
-			Mensagem.sucesso("Projeto salvo com sucesso!");
 		}
 	}
 
-	public void limparCampos() {
-		this.id = 0l;
-		this.nomeProjeto = null;
-		this.nomeCliente = null;
-		this.checkPoint = new CheckPoint();
-		this.projetoHistorico = new ProjetoHistorico();
-		this.historicoAlterado = new ArrayList<>();
-		this.historicoNovo = new ArrayList<>();
+	public void salvaProjetoHistorico() {
+		this.projeto.getCheckPoint().setProjeto(this.projeto);
+		if (DaoCheckPoint.salvaCheckPoint(this.projeto.getCheckPoint())) {
+			
+			if (DaoProjeto.salvar(this.projeto)) {
+				Mensagem.sucesso("Projeto salvo com sucesso!");
+
+			} else {
+				Mensagem.falha("Não foi possível salvar este Projeto/Historico");
+				
+			}
+
+		} else
+			Mensagem.falha("Não foi possível salvar o checkpoint");
+		
 	}
 
-	public void iniciaHistorioco() {
+	public void excluirHistorico(Historico historico) {
+		if (DaoHistorico.excluirHistorico(historico)) {
+			this.projeto = DaoProjeto.buscaProjetoLazy(this.projeto);
+
+			if (this.projeto.getCheckPoint() == null)
+				this.projeto.setCheckPoint(new CheckPoint());
+
+			out: for (Projeto p : this.projetosPesquisado) {
+				if (p.getCodProjeto().equals(this.projeto.getCodProjeto())) {
+					this.projetosPesquisado.remove(p);
+					this.projetosPesquisado.add(this.projeto);
+					break out;
+				}
+			}
+
+			Mensagem.sucesso("Histórico excluido com sucesso.");
+
+		} else {
+			Mensagem.sucesso("Não foi possível excluir o projeto.");
+		}
+	}
+
+	public void adicionaHistorico() {
+
+		if (DaoHistorico.salvaHistorico(this.historico)) {
+
+			this.projeto = DaoProjeto.buscaProjetoLazy(this.projeto);
+
+			if (this.projeto.getCheckPoint() == null)
+				this.projeto.setCheckPoint(new CheckPoint());
+
+			out: for (Projeto p : this.projetosPesquisado) {
+				if (p.getCodProjeto().equals(this.projeto.getCodProjeto())) {
+					this.projetosPesquisado.remove(p);
+					this.projetosPesquisado.add(this.projeto);
+					break out;
+				}
+			}
+
+			Mensagem.sucesso("Registro realizado com sucesso");
+
+		} else {
+			Mensagem.sucesso("Não foi possível realizar o registro");
+
+		}
+
+	}
+
+	public void iniciaHistorico() {
 		this.historico = new Historico();
+		this.historico.setProjeto(this.projeto);
+	}
+
+	public void limparCampos() {
+		this.projeto = null;
+		this.nomeProjeto = null;
+		this.nomeCliente = null;
+		this.projetosPesquisado = null;
+		this.historico = new Historico();
+		this.projetos = DaoProjeto.listarProjetosAtivos();
+		this.usuariosAutoComplete = DaoUsuario.listarUsuariosAtivos();
+	}
+
+	public List<Usuario> usuarioAutoComplete(String complete) {
+		return this.usuariosAutoComplete;
 	}
 
 	public Status[] getStatus() {
@@ -195,44 +214,12 @@ public class ProjetoHistoricoBean {
 		return AcaoHistorico.values();
 	}
 
-	public ProjetoHistorico getProjetoHistorico() {
-		return projetoHistorico;
-	}
-
-	public void setProjetoHistorico(ProjetoHistorico projetoHistorico) {
-		this.projetoHistorico = projetoHistorico;
-	}
-
 	public Historico getHistorico() {
 		return historico;
 	}
 
 	public void setHistorico(Historico historico) {
 		this.historico = historico;
-	}
-
-	public List<Historico> getHistoricoAlterado() {
-		return historicoAlterado;
-	}
-
-	public void setHistoricoAlterado(List<Historico> historicoAlterado) {
-		this.historicoAlterado = historicoAlterado;
-	}
-
-	public CheckPoint getCheckPoint() {
-		return checkPoint;
-	}
-
-	public void setCheckPoint(CheckPoint checkPoint) {
-		this.checkPoint = checkPoint;
-	}
-
-	public List<Historico> getHistoricoNovo() {
-		return historicoNovo;
-	}
-
-	public void setHistoricoNovo(List<Historico> historicoNovo) {
-		this.historicoNovo = historicoNovo;
 	}
 
 	public String getNomeProjeto() {
@@ -249,6 +236,38 @@ public class ProjetoHistoricoBean {
 
 	public void setNomeCliente(String nomeCliente) {
 		this.nomeCliente = nomeCliente;
+	}
+
+	public List<Projeto> getProjetos() {
+		return projetos;
+	}
+
+	public void setProjetos(List<Projeto> projetos) {
+		this.projetos = projetos;
+	}
+
+	public Projeto getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
+	}
+
+	public List<Projeto> getProjetosPesquisado() {
+		return projetosPesquisado;
+	}
+
+	public void setProjetosPesquisado(List<Projeto> projetosPesquisado) {
+		this.projetosPesquisado = projetosPesquisado;
+	}
+
+	public List<Historico> getHistoricos() {
+		return historicos;
+	}
+
+	public void setHistoricos(List<Historico> historicos) {
+		this.historicos = historicos;
 	}
 
 }

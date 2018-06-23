@@ -8,7 +8,7 @@ import javax.persistence.Query;
 
 import dominio.Cliente;
 import enumeradores.Status;
-import factory.ManageFactory;
+import factory.HibernateManageFactory;
 
 public class DaoCliente {
 
@@ -20,7 +20,7 @@ public class DaoCliente {
 	}
 
 	public static boolean persist(Cliente cliente) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		if (cliente.getNomeCliente() != null) {
 			try {
@@ -43,7 +43,7 @@ public class DaoCliente {
 	}
 
 	public static boolean alterar(Cliente cliente) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		entityManager.find(Cliente.class, cliente.getCodCliente());
 		try {
 			entityManager.getTransaction().begin();
@@ -61,7 +61,7 @@ public class DaoCliente {
 	}
 
 	public static void excluir(String nomeCliente) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		try {
 			String busca = "Select a from Cliente a where a.nomecliente = :nomecliente";
@@ -83,7 +83,7 @@ public class DaoCliente {
 	}
 
 	public static Cliente buscaClientePeloNome(String nomeCliente) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		Cliente cliente = new Cliente();
 
 		try {
@@ -104,7 +104,7 @@ public class DaoCliente {
 
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Cliente> listarClientes() {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		ArrayList<Cliente> clientes;
 
 		try {
@@ -123,7 +123,7 @@ public class DaoCliente {
 
 	@SuppressWarnings("unchecked")
 	public static List<Cliente> listarClientesAtivos() {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		try {
 			Query q = entityManager.createQuery("select cli from Cliente cli where cli.statusCliente = :status",
@@ -140,7 +140,7 @@ public class DaoCliente {
 	}
 
 	public static void detachCliente(Cliente cli) {
-		EntityManager entityManager = ManageFactory.getEntityManager();
+		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		
 		try {
 			entityManager.getTransaction().begin();

@@ -49,10 +49,19 @@ public class Historico {
 	private AcaoHistorico acaoHistorico;
 
 	@ManyToOne
-	private Usuario responsavel;	
+	private Usuario responsavel;
 	
 	@ManyToOne
-	private ProjetoHistorico projetoHistorico;
+	private Projeto projeto;
+	
+	
+	public Projeto getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(Projeto projeto) {
+		this.projeto = projeto;
+	}
 
 	public Long getId() {
 		return id;
@@ -124,14 +133,6 @@ public class Historico {
 
 	public void setJustificativaAtraso(String justificativaAtraso) {
 		this.justificativaAtraso = justificativaAtraso;
-	}
-
-	public ProjetoHistorico getProjetoHistorico() {
-		return projetoHistorico;
-	}
-
-	public void setProjetoHistorico(ProjetoHistorico projetoHistorico) {
-		this.projetoHistorico = projetoHistorico;
 	}
 
 	public boolean isTarefaAtrasada() {

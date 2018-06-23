@@ -18,7 +18,8 @@
 			<p:outputPanel>
 				<h:graphicImage library="images" name="logo.png" height="5%"
 					width="5%" />
-				<p:outputLabel value="Cadastro de usuario" style="font-size: 24px !important"/>
+				<p:outputLabel value="Cadastro de usuario"
+					style="font-size: 24px !important" />
 			</p:outputPanel>
 
 			<p:panel>
@@ -28,31 +29,28 @@
 					<!-- PAINEL DOS DADOS (TOPO) DO CADASTRO DO USUARIO-->
 					<p:outputPanel>
 						<p:panelGrid columns="4" layout="grid"
-							columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+							columnClasses="ui-grid-col-2,ui-grid-col-6,ui-grid-col-2,ui-grid-col-2"
 							styleClass="ui-panelgrid-blank">
 							<p:outputPanel>
 								<p:outputLabel value="Código Usuario:" for="codigoUsuario" />
 								<br />
 								<p:inputText id="codigoUsuario" disabled="true"
-									value="#{cadastroUsuarioBean.usuario.codUsuario}" colspan="1"
-									size="20" />
+									value="#{cadastroUsuarioBean.usuario.codUsuario}" />
 							</p:outputPanel>
 
 							<p:outputPanel>
 								<p:outputLabel value="Nome do Usuario:" for="nomeUsuario" />
 								<br />
 								<p:inputText id="nomeUsuario"
-									value="#{cadastroUsuarioBean.usuario.nomeUsuario}" colspan="2"
-									size="40" />
+									value="#{cadastroUsuarioBean.usuario.nomeUsuario}" />
 							</p:outputPanel>
 
 							<p:outputPanel>
 								<p:outputLabel value="Status do Usuario:" for="statusUsuario" />
 								<br />
-								<p:selectOneMenu id="statusUsuario" size="20"
+								<p:selectOneMenu id="statusUsuario"
 									value="#{cadastroUsuarioBean.usuario.statusUsuario}">
-									<f:selectItem itemLabel="-STATUS-"
-										noSelectionOption="true" />
+									<f:selectItem itemLabel="-STATUS-" noSelectionOption="true" />
 									<f:selectItems value="#{cadastroUsuarioBean.status}"
 										itemLabel="#{Sts.status}" var="Sts" itemValue="#{Sts}" />
 								</p:selectOneMenu>
@@ -61,10 +59,9 @@
 							<p:outputPanel>
 								<p:outputLabel value="Direito:" for="direitoUsuario" />
 								<br />
-								<p:selectOneMenu id="direitoUsuario" size="20"
+								<p:selectOneMenu id="direitoUsuario"
 									value="#{cadastroUsuarioBean.usuario.direitoUsuario}">
-									<f:selectItem itemLabel="-DIREITO-"
-										noSelectionOption="true" />
+									<f:selectItem itemLabel="-DIREITO-" noSelectionOption="true" />
 									<f:selectItems value="#{cadastroUsuarioBean.direito}"
 										itemLabel="#{dir.direito}" var="dir" itemValue="#{dir}" />
 								</p:selectOneMenu>
@@ -72,60 +69,58 @@
 						</p:panelGrid>
 
 						<p:panelGrid columns="4" layout="grid"
-							columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+							columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-2,ui-grid-col-2"
 							styleClass="ui-panelgrid-blank">
 
 							<p:outputPanel>
 								<p:outputLabel value="Senha:" for="senhaUsuario" />
 								<br />
-								<p:password id="senhaUsuario" size="20" required="true"
+								<p:password id="senhaUsuario" required="true"
 									value="#{cadastroUsuarioBean.usuario.paswUsuario}" />
 							</p:outputPanel>
 
 							<p:outputPanel>
-								<p:outputLabel value="E-mail:" for="emailUsuario" size="50" />
+								<p:outputLabel value="E-mail:" for="emailUsuario" />
 								<br />
-								<p:inputText id="emailUsuario" size="40"
+								<p:inputText id="emailUsuario"
 									value="#{cadastroUsuarioBean.usuario.email}" />
 							</p:outputPanel>
 
 							<p:outputPanel>
 								<p:outputLabel value="Cargo:" for="cargoUsuario" />
 								<br />
-								<p:selectOneMenu id="cargoUsuario" size="20"
+								<p:selectOneMenu id="cargoUsuario"
 									value="#{cadastroUsuarioBean.usuario.cargo}">
-									<f:selectItem itemLabel="-CARGO-"
-										noSelectionOption="true" />
+									<f:selectItem itemLabel="-CARGO-" noSelectionOption="true" />
 									<f:selectItems value="#{cadastroUsuarioBean.cargo}"
 										itemLabel="#{car.cargo}" var="car" itemValue="#{car}" />
 								</p:selectOneMenu>
 							</p:outputPanel>
-							
+
 							<p:outputPanel>
 								<p:outputLabel value="Nivel:" for="nivelUsuario" />
 								<br />
-								<p:selectOneMenu id="nivelUsuario" size="20"
+								<p:selectOneMenu id="nivelUsuario"
 									value="#{cadastroUsuarioBean.usuario.nivel}">
-									<f:selectItem itemLabel="-NIVEL-"
-										noSelectionOption="true" />
+									<f:selectItem itemLabel="-NIVEL-" noSelectionOption="true" />
 									<f:selectItems value="#{cadastroUsuarioBean.nivel}"
 										itemLabel="#{niv.nivel}" var="niv" itemValue="#{niv}" />
 								</p:selectOneMenu>
 							</p:outputPanel>
 						</p:panelGrid>
-						<p:panelGrid columns="4" layout="grid"
-							columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3"
+
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-2,ui-grid-col-10"
 							styleClass="ui-panelgrid-blank">
 
 							<p:outputPanel>
 								<p:outputLabel value="Data Cadastro:" for="dtCadastroUsuario" />
 								<br />
-								<p:calendar id="dtCadastroUsuario" size="20"
+								<p:calendar id="dtCadastroUsuario"
 									value="#{cadastroUsuarioBean.usuario.dataCadastro}" />
 							</p:outputPanel>
 							<p:outputPanel></p:outputPanel>
-							<p:outputPanel></p:outputPanel>
-							<p:outputPanel></p:outputPanel>
+
 						</p:panelGrid>
 					</p:outputPanel>
 
