@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.Graphics2D;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
@@ -10,23 +11,40 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.general.DefaultPieDataset;
+
+import com.itextpdf.awt.PdfGraphics2D;
+import com.itextpdf.awt.geom.Rectangle2D;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import dao.DaoProjeto;
+import dominio.Historico;
+import dominio.Projeto;
 import dominio.Usuario;
 
 public class PDF {
+	private static Document documento;
 
-	public static boolean usuario(Usuario usuario) {
+	public static boolean relatorioUsuario(Usuario usuario) {
 
-		Document documento = new Document();
+		documento = new Document();
 
 		try {
 
@@ -38,7 +56,7 @@ public class PDF {
 			documento.add(new Paragraph("Gerando PDF - Java"));
 			documento.close();
 
-			PDF.downloadPDF(usuario.getNomeUsuario() + ".PDF", path);
+			// PDF.downloadPDF(usuario.getNomeUsuario() + ".PDF", path);
 			return true;
 
 		} catch (DocumentException de) {
@@ -51,13 +69,54 @@ public class PDF {
 
 	}
 
+	public static boolean relatorioHistorico(Projeto projeto) {
+		documento = new Document();
+		try {
+
+			String path = new File(".").getCanonicalPath();
+			PdfWriter writer = PdfWriter.getInstance(documento,
+					new FileOutputStream(path + "/" + projeto.getNomeProjeto() + ".pdf"));
+			documento.open();
+
+			documento.setPageSize(PageSize.A3);
+			// adicionando um parágrafo no documento
+			documento.add(new Paragraph("Relatório de projeto/histórico"));
+			documento.add(new Paragraph(". "));
+
+			/*PdfContentByte cb = writer.getDirectContent();
+			float width = PageSize.A4.getWidth();
+			float height = PageSize.A4.getHeight() / 2;
+			// Pie chart
+			PdfTemplate pie = cb.createTemplate(width, height);
+			Graphics2D g2d1 = new PdfGraphics2D(pie, width, height);
+			Rectangle2D r2d1 = new Rectangle2D.Double(0, 0, width, height);
+			getPieChart(projeto).draw(g2d1, r2d1);
+			g2d1.dispose();
+			cb.addTemplate(pie, 0, height);*/
+			
+			documento.add(tabelaHistorico(projeto));
+			documento.close();
+
+			return true;
+
+		} catch (DocumentException de) {
+			Mensagem.falha(de.getMessage());
+		} catch (IOException ioe) {
+			Mensagem.falha(ioe.getMessage());
+		} finally {
+			documento.close();
+		}
+		return false;
+
+	}
+
 	private static void downloadPDF(String nomeArquivo, String localDoArquivo) throws IOException {
 
 		int DEFAULT_BUFFER_SIZE = 10240; // 10KB.
 		File file = null;
 
 		try {
-			String nomePDF = nomeArquivo.replaceAll(" ","_");
+			String nomePDF = nomeArquivo.replaceAll(" ", "_");
 			file = new File(new URI(localDoArquivo + "/" + nomePDF));
 		} catch (URISyntaxException e1) {
 			// TODO Auto-generated catch block
@@ -108,5 +167,37 @@ public class PDF {
 			}
 		}
 	}
+
+	public static PdfPTable tabelaHistorico(Projeto projeto) {
+		Paragraph tableHead = new Paragraph(projeto.getNomeProjeto());
+		tableHead.setAlignment(Element.ALIGN_CENTER);
+		PdfPTable table = new PdfPTable(5);
+		PdfPCell header = new PdfPCell(tableHead);
+		header.setColspan(5);
+		table.addCell(header);
+		table.addCell("Realização");
+		table.addCell("Ação");
+		table.addCell("Historico");
+		table.addCell("Responsável");
+		table.addCell("Status");
+		projeto = DaoProjeto.buscaProjetoLazy(projeto);
+		for (Historico h : projeto.getHistoricos()) {
+			table.addCell(new SimpleDateFormat("dd/MM/yyyy").format(h.getDataRealizacao()));
+			table.addCell(h.getTipoAcao().getTipoAcao());
+			table.addCell(h.getAcaoHistorico().getAcaoHistorico());
+			table.addCell(h.getResponsavel().getNomeUsuario());
+			table.addCell(h.getStatusHistorico().getStatusHistorico());
+		}
+		return table;
+	}
+
+	/*public static JFreeChart getPieChart(Projeto projeto) throws IOException {
+		projeto = DaoProjeto.buscaProjetoLazy(projeto);
+		DefaultPieDataset dataset = new DefaultPieDataset();
+		for (Historico h : projeto.getHistoricos()) {
+			dataset.setValue("");
+		}
+		return ChartFactory.createPieChart("Movies / directors", dataset, true, true, false);
+	}*/
 
 }

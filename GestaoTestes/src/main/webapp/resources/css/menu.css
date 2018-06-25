@@ -1,9 +1,12 @@
-.mnLateral {
-	background-color: #ff00aa;
-	margin-left: -10px;
-	position: absolute;
+a:hover{
+	background-color: #99ccff;
 }
 
-.mnLaterl:hover {
-	margin-left: 100px;
+.menubuttons>.ui-button{
+	background-color: inherit;
+	border: none;
+}
+
+.ui-button:hover {
+	background-color: #99ccff;
 }

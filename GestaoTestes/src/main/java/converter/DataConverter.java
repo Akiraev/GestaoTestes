@@ -16,7 +16,7 @@ public class DataConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value == null || value.isEmpty())
 			return null;
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyyy");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			Date data = simpleDateFormat.parse(value);
 			return data;
@@ -31,7 +31,7 @@ public class DataConverter implements Converter {
 		if (!(value instanceof Date))
 			return null;
 		Date data = (Date) value;
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyyy");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		String dataConverter = simpleDateFormat.format(data);
 
 		return dataConverter;

@@ -7,6 +7,137 @@
 
 	<!-- PAINEL Dash -->
 	<h:form id="dash">
-	
+		<p:panelGrid columns="2" layout="grid"
+			columnClasses="ui-grid-col-8,ui-grid-col-4"
+			styleClass="ui-panelgrid-blank">
+
+			<p:outputPanel>
+
+				<p:panel>
+					<p:panelGrid columns="2" layout="grid"
+						columnClasses="ui-grid-col-6,ui-grid-col-6"
+						styleClass="ui-panelgrid-blank">
+						<p:outputPanel>
+							<h:graphicImage library="images" name="pieChart.png" height="10%"
+								width="10%" />
+							<p:outputLabel value="Andamento dos projetos"
+								style="font-size: 20px !important; font-weight: bolder;" />
+						</p:outputPanel>
+
+						<p:outputPanel>
+						</p:outputPanel>
+					</p:panelGrid>
+
+					<p:panelGrid columns="3" layout="grid"
+						columnClasses="ui-grid-col-7,ui-grid-col-3,ui-grid-col-2"
+						styleClass="ui-panelgrid-blank">
+						<p:outputPanel>
+
+						</p:outputPanel>
+
+						<p:outputPanel>
+							<p:outputLabel value="Período" for="periodoDash" />
+							<br />
+							<p:selectOneMenu id="periodoDash"
+								value="#{dashboardBean.periodoProjeto}">								
+								<f:selectItems value="#{dashboardBean.periodo}" var="periodo"
+									itemLabel="#{periodo.periodo}" itemValue="#{periodo}" />
+							</p:selectOneMenu>
+						</p:outputPanel>
+
+						<p:outputPanel>
+							<br />
+							<p:commandButton value="Filtrar"
+								action="#{dashboardBean.filtrarProjetoPorData}" update="dash" ajax="false" />
+						</p:outputPanel>
+					</p:panelGrid>
+
+					<br />
+
+					<p:dataTable id="dashProjDataTable" value="#{dashboardBean.projetos}" var="projeto"
+						reflow="true" emptyMessage="Sem novos projetos cadastrados">
+						<p:column headerText="Projeto">
+							<h:outputText value="#{projeto.nomeProjeto}" />
+						</p:column>
+
+						<p:column headerText="Data início">
+							<h:outputText value="#{projeto.dataProjetoInicio}"
+								converter="dataConverter" />
+						</p:column>
+
+						<p:column headerText="Data fim">
+							<h:outputText value="#{projeto.dataProjetoFim}"
+								converter="dataConverter" />
+						</p:column>
+
+						<p:column headerText="Progresso">
+							<p:progressBar value="#{projeto.checkPoint.progresso}"
+								labelTemplate="{value}%" displayOnly="true" />
+						</p:column>
+
+					</p:dataTable>
+					<p:outputLabel value="Total de Registros:" />
+					<p:outputLabel value="#{dashboardBean.projetos.size()}" />
+				</p:panel>
+			</p:outputPanel>
+
+
+			<p:outputPanel>
+				<p:panel>
+					<p:panelGrid columns="1" layout="grid"
+						styleClass="ui-panelgrid-blank">
+						<p:outputPanel>
+							<h:graphicImage library="images" name="schedule.png" height="15%"
+								width="15%" />
+							<p:outputLabel value="Tarefas"
+								style="font-size: 20px !important; font-weight: bolder;" />
+						</p:outputPanel>
+
+						<p:panelGrid columns="2" layout="grid"
+							columnClasses="ui-grid-col-8,ui-grid-col-4"
+							styleClass="ui-panelgrid-blank">
+							<p:outputPanel>
+								<p:outputLabel value="Período" for="periodoDashTP" />
+								<br />
+								<p:selectOneMenu id="periodoDashTP"
+									value="#{dashboardBean.periodoHistorico}">
+									<f:selectItems value="#{dashboardBean.periodo}" var="periodo"
+										itemLabel="#{periodo.periodo}" itemValue="#{periodo}" />
+								</p:selectOneMenu>
+							</p:outputPanel>
+
+							<p:outputPanel>
+								<br />
+								<p:commandButton value="Filtrar"
+								action="#{dashboardBean.filtrarHistoricoPorData}" update="dash" ajax="false" />
+							</p:outputPanel>
+						</p:panelGrid>
+
+						<p:dataTable value="#{dashboardBean.historicos}" var="historico"
+							reflow="true" emptyMessage="Sem novos historicos cadastrados">
+							<p:column headerText="Data	">
+								<h:outputText value="#{historico.dataRealizacao}"
+									converter="dataConverter" />
+							</p:column>
+
+							<p:column headerText="Tipo">
+								<h:outputText value="#{historico.tipoAcao.tipoAcao}" />
+							</p:column>
+
+							<p:column headerText="Tarefa">
+								<h:outputText value="#{historico.acaoHistorico.acaoHistorico}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</p:panelGrid>
+
+					<p:outputLabel value="Total de Registros:" />
+					<p:outputLabel value="#{dashboardBean.historicos.size()}" />
+				</p:panel>
+			</p:outputPanel>
+
+		</p:panelGrid>
+
 	</h:form>
 </ui:composition>

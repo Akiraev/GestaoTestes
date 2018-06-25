@@ -9,49 +9,57 @@
 	<ui:define name="titulo">Login do sistema de Gestão de testes</ui:define>
 
 	<ui:define name="conteudo">
-		<h:form>
 
+		<!-- CORPO DO LOGIN DE ACESSO -->
+		<div id="corpoLogin"
+			style="width: 350px; margin: auto; background-color: #ffffff; border: solid #2f2a2a">
 
-			<div id="separadorDIV">
-				<!-- CORPO DO LOGIN DE ACESSO -->
-				<div id="corpoLogin">
-					<p:panelGrid styleClass="noBorders" columns="2">
-						<h:link>
-							<h3 style="margin-left: 60px">Acesso ao Sistema</h3>
-						</h:link>					
+			<h:form id="formLogin">
 
-					</p:panelGrid>
+				<div style="margin: 40px">
 
-					<h:form id="formLogin">
-						
-						<p:panelGrid id="panelLogin" styleClass="noBorders" columns="2"
-							style="width: 100%; margin-top: 20px; margin-bottom: 40px">
-							<p:outputLabel styleClass="labelLogin" value="Usuario:"
-								for="usuario" />
-							<p:inputText id="usuario" size="25" required="true"
-								value="#{loginBean.usuario.email}" />
+					<div class="ui-fluid">
 
-							<p:outputLabel styleClass="labelLogin" value="Senha: "
-								for="senha" />
-							<p:password id="senha" size="25" required="true"
-								value="#{loginBean.usuario.paswUsuario}" />
+						<p:panelGrid columns="1" layout="grid"
+							styleClass="ui-panelgrid-blank">
 
-							<h:panelGroup />
+							<p:outputPanel style="text-align: center">
+								<h:graphicImage library="images" name="logo.png" height="15%"
+									width="15%" />
 
-							<h:panelGroup columns="2" align="right" style="width: 100%">
+								<label style="font-size: 20px; font-weight: bolder">Login
+									no sistema</label>
+
+							</p:outputPanel>
+
+							<p:outputPanel>
+								<p:outputLabel styleClass="labelLogin" value="E-mail"
+									for="usuario" />
+								<br />
+								<p:inputText id="usuario" size="25" required="true"
+									value="#{loginBean.usuario.email}" />
+							</p:outputPanel>
+
+							<p:outputPanel>
+								<p:outputLabel styleClass="labelLogin" value="Senha "
+									for="senha" />
+								<br />
+								<p:password id="senha" size="25" required="true"
+									value="#{loginBean.usuario.paswUsuario}" />
+							</p:outputPanel>
+
+							<p:outputPanel>
 								<p:commandButton styleClass="button" value="Acessar"
 									update="@all" action="#{loginBean.logar}" />
-								<p:button styleClass="button" value="cancelar" />
-							</h:panelGroup>
+							</p:outputPanel>
 
 						</p:panelGrid>
-
-					</h:form>
+					</div>
 				</div>
-			</div>
-		</h:form>
+			</h:form>
+
+		</div>
 
 	</ui:define>
-
 
 </ui:composition>

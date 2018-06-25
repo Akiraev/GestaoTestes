@@ -66,7 +66,7 @@ public class UsuarioBean {
 	}
 
 	public void gerarPdfUsuario() {
-		if (PDF.usuario(this.usuario)) {
+		if (PDF.relatorioUsuario(this.usuario)) {
 			Mensagem.sucesso("PDF gerado");
 		} else {
 			Mensagem.falha("Não gerou PDF");

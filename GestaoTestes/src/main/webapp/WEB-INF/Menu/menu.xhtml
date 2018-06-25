@@ -23,31 +23,60 @@
 					</p:outputPanel>
 
 					<p:outputPanel>
-						<p:outputLabel value="#{menuBean.usuarioLogado} " style="color:#ffffff; margin-right:5px;"></p:outputLabel>
+						<p:outputLabel value="#{menuBean.usuarioLogado} "
+							style="color:#ffffff; margin-right:5px;"></p:outputLabel>
 						<p:graphicImage library="images" name="usuNull.png" height="15%"
 							width="15%" />
 					</p:outputPanel>
 				</p:panelGrid>
 				<p:sidebar widgetVar="sidebar1" baseZIndex="10000">
-					<h1 style="font-weight: normal">Menu</h1>
 
-					<p:commandButton value="Dashboard" action="#{menuBean.menuDash}"
-						update="@all" />
+					<p:panel>
+						<h1 style="font-weight: normal">Menu</h1>
 
-					<p:commandButton value="Cadastro de usuario"
-						action="#{menuBean.menuUsuario}" update="@all" />
+						<p:panel>
+							<div class="menubuttons">
+								<p:commandButton value="Dashboard" action="#{menuBean.menuDash}"
+									update="@all" />
+							</div>
+						</p:panel>
 
-					<p:commandButton value="Cadastro de Projeto"
-						action="#{menuBean.menuProjeto}" update="@all" />
+						<p:panel>
+							<div class="menubuttons">
+								<p:commandButton value="Cadastro de usuario"
+									action="#{menuBean.menuUsuario}" update="@all" />
+							</div>
+						</p:panel>
 
-					<p:commandButton value="Cadastro de Cliente"
-						action="#{menuBean.menuCliente}" update="@all" />
+						<p:panel>
+							<div class="menubuttons">
+								<p:commandButton value="Cadastro de Projeto"
+									action="#{menuBean.menuProjeto}" update="@all" />
+							</div>
+						</p:panel>
 
-					<p:commandButton value="Cadastro de Historico"
-						action="#{menuBean.menuProjetoHistorico}" update="@all" />
-						
-					<p:commandButton value="Sair"
-						action="#{menuBean.menuSair}" update="@all" />
+						<p:panel>
+							<div class="menubuttons">
+								<p:commandButton value="Cadastro de Cliente"
+									action="#{menuBean.menuCliente}" update="@all" />
+							</div>
+						</p:panel>
+
+						<p:panel>
+							<div class="menubuttons">
+								<p:commandButton value="Cadastro de Historico"
+									action="#{menuBean.menuProjetoHistorico}" update="@all" />
+							</div>
+						</p:panel>
+
+						<p:panel>
+							<div class="menubuttons">
+								<p:commandButton value="Sair" action="#{menuBean.menuSair}"
+									update="@all" />
+							</div>
+						</p:panel>
+
+					</p:panel>
 				</p:sidebar>
 			</div>
 		</p:outputPanel>

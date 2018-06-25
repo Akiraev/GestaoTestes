@@ -19,7 +19,7 @@ public class DaoUsuario {
 			DaoUsuario.persist(usuario);
 	}
 
-	public static boolean persist(Usuario usuario) {
+	private static boolean persist(Usuario usuario) {
 		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 
 		if (usuario.getEmail() != null) {
@@ -43,7 +43,7 @@ public class DaoUsuario {
 
 	}
 
-	public static boolean alterar(Usuario usuario) {
+	private static boolean alterar(Usuario usuario) {
 		EntityManager entityManager = HibernateManageFactory.getEntityManager();
 		entityManager.find(Usuario.class, usuario.getCodUsuario());
 		

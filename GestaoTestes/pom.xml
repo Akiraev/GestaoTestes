@@ -68,7 +68,7 @@
 			<artifactId>itextpdf</artifactId>
 			<version>5.5.13</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.primefaces.themes/all-themes -->
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
@@ -85,6 +85,12 @@
 			<type>pom</type>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/jfree/jfreechart -->
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.13</version>
+		</dependency>
 
 	</dependencies>
 

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 @Entity
 public class CheckPoint {
@@ -39,6 +40,9 @@ public class CheckPoint {
 	
 	@Column
 	private boolean entregaRelatório;
+	
+	@Transient
+	private double progresso;
 
 	public Long getId() {
 		return id;
@@ -118,5 +122,13 @@ public class CheckPoint {
 
 	public void setProjeto(Projeto projeto) {
 		this.projeto = projeto;
+	}
+
+	public double getProgresso() {
+		return progresso;
+	}
+
+	public void setProgresso(double progresso) {
+		this.progresso = progresso;
 	}
 }
