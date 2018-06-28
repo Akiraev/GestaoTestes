@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum TipoAcaoHistorico {
-	EMAIL("E-mail");
+	EMAIL("E-mail"),TELEFONEMA("Telefonema"),REUNIAO("Reunião");
 
 	private String tipoAcao;
 

@@ -2,22 +2,25 @@ package util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import dao.DaoProjeto;
-import dao.DaoUsuario;
 import dominio.Projeto;
-import dominio.Usuario;
+import relatorios.Relatorio;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		String path = new File(".").getCanonicalPath()+"/Ola";
-		System.out.println(path);
+List<Projeto> projetos = DaoProjeto.listarProjetos();
 		
-		Usuario usuario = DaoUsuario.buscaUsuario("roberto@gmail.com");
-		PDF.relatorioUsuario(usuario);
+		if (projetos.size() > 0) {
+			System.out.println(projetos.size());
+			Relatorio.projetos(projetos);
+		}
 		
-		Projeto projeto = DaoProjeto.buscaProjeto("SCIELO teste de segurança");
-		PDF.relatorioHistorico(projeto);
+		//exibe no terminal o local onde o arquivo se encontra
+		System.out.print(new File("Relatório de projetos.pdf").getAbsolutePath());
+		System.out.print("\n");
+		System.out.print(new File(".").getCanonicalPath());
 		
 		
 	}

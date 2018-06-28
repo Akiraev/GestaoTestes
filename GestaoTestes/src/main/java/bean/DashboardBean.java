@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import dao.DaoProjeto;
+import dominio.CheckPoint;
 import dominio.Historico;
 import dominio.Projeto;
 import dominio.Usuario;
@@ -27,7 +28,6 @@ public class DashboardBean {
 	private List<Projeto> projetos;
 	private List<Historico> historicos;
 
-	
 	@PostConstruct
 	public void init() {
 		List<Projeto> ps = DaoProjeto.listarProjetosAtivos();
@@ -37,7 +37,6 @@ public class DashboardBean {
 		this.historicos = atribuiHistorico(ps, usuarioLogado);
 	}
 
-	
 	public List<Projeto> atribuiProjeto(List<Projeto> ps, Usuario usuarioLogado) {
 		List<Projeto> projetos = new ArrayList<Projeto>();
 
@@ -57,7 +56,6 @@ public class DashboardBean {
 		return projetos;
 	}
 
-	
 	public List<Historico> atribuiHistorico(List<Projeto> ps, Usuario usuarioLogado) {
 		List<Historico> historicos = new ArrayList<Historico>();
 
@@ -81,7 +79,6 @@ public class DashboardBean {
 		return historicos;
 	}
 
-	
 	public void filtrarProjetoPorData() {
 		if (this.periodoProjeto != null) {
 			List<Projeto> ps = DaoProjeto.listarProjetosAtivos();
@@ -154,7 +151,6 @@ public class DashboardBean {
 
 	}
 
-	
 	public void filtrarHistoricoPorData() {
 		if (this.periodoHistorico != null) {
 			List<Projeto> ps = DaoProjeto.listarProjetosAtivos();
@@ -236,10 +232,13 @@ public class DashboardBean {
 
 	}
 
-	
 	public void calculaProgresso(Projeto projeto) {
 		double progresso = 0;
 		double concluido = 0;
+
+		if (projeto.getCheckPoint() == null) {
+			projeto.setCheckPoint(new CheckPoint());
+		}
 
 		if (projeto.getCheckPoint().isColetaLogs())
 			concluido += 1;
@@ -267,7 +266,6 @@ public class DashboardBean {
 
 	}
 
-	
 	public Periodo[] getPeriodo() {
 		return Periodo.values();
 	}

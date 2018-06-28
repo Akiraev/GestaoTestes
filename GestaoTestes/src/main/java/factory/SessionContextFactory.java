@@ -1,5 +1,7 @@
 package factory;
 
+import java.io.InputStream;
+
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -24,6 +26,10 @@ public class SessionContextFactory {
 		}
 	}
 
+	public InputStream getResourceAsStream(String filePath) {
+		return currentExternalContext().getResourceAsStream(filePath);
+	}
+
 	public void encerrarSessao() {
 		currentExternalContext().invalidateSession();
 	}
@@ -35,7 +41,7 @@ public class SessionContextFactory {
 	public void setAttribute(String nome, Object valor) {
 		currentExternalContext().getSessionMap().put(nome, valor);
 	}
-	
+
 	public void removeSessionMap() {
 		currentExternalContext().getSessionMap().clear();
 	}
@@ -45,8 +51,8 @@ public class SessionContextFactory {
 			return false;
 		return true;
 	}
-	
+
 	public static void setNulInstanceSessionContext() {
 		instance = null;
-	} 
+	}
 }
