@@ -1,11 +1,18 @@
 package bean;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import dao.DaoCliente;
 import dao.DaoProjeto;
@@ -15,11 +22,13 @@ import dominio.Projeto;
 import dominio.Usuario;
 import enumeradores.DireitoUsuario;
 import enumeradores.Status;
+import relatorios.Relatorio;
 import util.Mensagem;
 
 @ManagedBean(name = "cadastroProjetoBean")
 @ViewScoped
 public class ProjetoBean {
+	private StreamedContent file;
 	private Projeto projeto;
 	private String projetoPesquisado;
 	private List<Projeto> projetosPesquisados;
@@ -34,6 +43,7 @@ public class ProjetoBean {
 	@PostConstruct
 	public void init() {
 		this.projetos = DaoProjeto.listarProjetos();
+		this.baixarRelatorio();
 		this.clientesAutoComplete = DaoCliente.listarClientesAtivos();
 		this.usuariosAutoComplete = DaoUsuario.listarUsuariosAtivos();
 	}
@@ -124,6 +134,32 @@ public class ProjetoBean {
 
 	}
 
+	public void baixarRelatorio() {
+
+		if (this.projetos.size() > 0) {
+			try {
+				Relatorio.projetos(this.projetos);
+				System.out.println("Tamanho do projeto" + this.projetos.size());
+
+				String filePath = new File("RelatórioDeProjetos.pdf").getAbsolutePath();
+				String canonicalPath = new File(".").getCanonicalPath();
+				System.out.println(filePath);
+				System.out.println(canonicalPath);
+
+				InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("RelatórioDeProjetos.pdf");
+				System.out.println(stream == null);
+				this.file = new DefaultStreamedContent(stream, ".", "RelatórioDeProjetos.pdf");
+				System.out.println(file == null);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+			Mensagem.falha("Sem projetos para download");
+		}
+	}
+
 	public Status[] getStatus() {
 		return Status.values();
 	}
@@ -142,6 +178,14 @@ public class ProjetoBean {
 
 	public void setProjetoPesquisado(String projetoPesquisado) {
 		this.projetoPesquisado = projetoPesquisado;
+	}
+
+	public StreamedContent getFile() {
+		return file;
+	}
+
+	public void setFile(StreamedContent file) {
+		this.file = file;
 	}
 
 	public List<Projeto> getProjetosPesquisados() {

@@ -15,7 +15,8 @@
 			<p:outputPanel>
 				<h:graphicImage library="images" name="logo.png" height="5%"
 					width="5%" />
-				<p:outputLabel value="Cadastro de projeto" style="font-size: 24px !important" />
+				<p:outputLabel value="Cadastro de projeto"
+					style="font-size: 24px !important" />
 			</p:outputPanel>
 
 			<p:panel>
@@ -48,7 +49,8 @@
 							<p:outputPanel>
 								<p:outputLabel value="Status projeto:" for="statusProjeto" />
 								<br />
-								<p:selectOneMenu id="statusProjeto" autoWidth="false" value="#{cadastroProjetoBean.projeto.statusProjeto}">
+								<p:selectOneMenu id="statusProjeto" autoWidth="false"
+									value="#{cadastroProjetoBean.projeto.statusProjeto}">
 									<f:selectItem itemLabel="-Status-" noSelectionOption="true" />
 									<f:selectItems value="#{cadastroProjetoBean.status}"
 										itemLabel="#{Sts.status}" var="Sts" itemValue="#{Sts}" />
@@ -140,8 +142,13 @@
 						<p:panelGrid columns="3" layout="grid"
 							columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4"
 							styleClass="ui-panelgrid-blank">
-							<p:commandButton value="Imprimir Cadastro" />
-
+							
+							<p:commandButton value="Imprimir Cadastro" ajax="false"
+								onclick="PrimeFaces.monitorDownload(start, stop);"
+								icon="ui-icon-arrowthick-1-s">
+								<p:fileDownload value="#{cadastroProjetoBean.file}" />
+							</p:commandButton>
+							
 							<p:commandButton value="salvar"
 								actionListener="#{cadastroProjetoBean.salvarProjeto}"
 								update="frmCadastroProjeto frmPesquisaProjeto" />
@@ -155,7 +162,7 @@
 					<!-- TABLE VIEW -->
 					<p:outputPanel>
 						<p:outputLabel value="Projetos cadastrados"
-							style="font-size: 24px" />
+							style="font-size: 24px !important" />
 
 						<p:dataTable value="#{cadastroProjetoBean.projetos}" var="projeto"
 							reflow="true" emptyMessage="Sem novos projetos cadastrados"
@@ -186,5 +193,15 @@
 			</p:panel>
 		</p:panel>
 	</h:form>
+
+	<script type="text/javascript">
+		function start() {
+			PF('statusDialog').show();
+		}
+
+		function stop() {
+			PF('statusDialog').hide();
+		}
+	</script>
 
 </ui:composition>

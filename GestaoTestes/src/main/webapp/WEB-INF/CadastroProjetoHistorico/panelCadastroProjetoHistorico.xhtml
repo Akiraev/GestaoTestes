@@ -68,35 +68,37 @@
 							<p:outputPanel>
 								<p:outputLabel value="Status" for="statusHistorico" />
 								<br />
-								<p:inputText id="statusHistorico"
-									value="#{projetoHistoricoBean.projeto.statusProjeto.status}"
-									readonly="true" />
 
+								<p:selectOneMenu id="statusHistorico" autoWidth="false"
+									value="#{projetoHistoricoBean.projeto.statusProjeto}"
+									disabled="#{projetoHistoricoBean.projeto.codProjeto==null? true:false}">
+									<f:selectItem itemLabel="-Status-" noSelectionOption="true" />
+									<f:selectItems value="#{projetoHistoricoBean.status}"
+										itemLabel="#{Sts.status}" var="Sts" itemValue="#{Sts}" />
+								</p:selectOneMenu>
 							</p:outputPanel>
 
 							<p:outputPanel>
 								<p:outputLabel value="Data Inicio:" for="dataInicio" />
 								<br />
-								<p:inputText id="dataInicio" converter="dataConverter"
-									value="#{projetoHistoricoBean.projeto.dataProjetoInicio}"
-									readonly="true" />
+								<p:calendar id="dataInicio" pattern="dd/MM/yyyy"
+									disabled="#{projetoHistoricoBean.projeto.dataProjetoInicio==null? true:false}"
+									value="#{projetoHistoricoBean.projeto.dataProjetoInicio}" />
+
 							</p:outputPanel>
 
 							<p:outputPanel>
 								<p:outputLabel value="Data término:" for="dataTermino" />
 								<br />
-								<p:inputText id="dataTermino" converter="dataConverter"
-									readonly="true"
+								<p:calendar id="dataTermino" pattern="dd/MM/yyyy"
+									disabled="#{projetoHistoricoBean.projeto.dataProjetoInicio==null? true:false}"
 									value="#{projetoHistoricoBean.projeto.dataProjetoFim}" />
+
 							</p:outputPanel>
 
 							<p:outputPanel></p:outputPanel>
 						</p:panelGrid>
 					</p:outputPanel>
-
-
-
-
 
 
 
@@ -109,23 +111,25 @@
 
 
 							<p:commandButton value="Imprimir Cadastro"
-								disabled="#{projetoHistoricoBean.projeto==null? true:false}" />
+								disabled="#{projetoHistoricoBean.projeto.codProjeto==null? true:false}" />
 
 							<p:commandButton value="Imprimir Histórico"
-								disabled="#{projetoHistoricoBean.projeto==null? true:false}" />
+								disabled="#{projetoHistoricoBean.projeto.codProjeto==null? true:false}">
+								<!-- <p:fileDownload value="#{fileDownloadView.file}" /> -->
+							</p:commandButton>
 
 							<p:commandButton value="histórico"
-								disabled="#{projetoHistoricoBean.projeto==null? true:false}"
+								disabled="#{projetoHistoricoBean.projeto.codProjeto==null? true:false}"
 								actionListener="#{projetoHistoricoBean.iniciaHistorico}"
 								oncomplete="PF('cadastroDeHistoricoDialog').show()"
 								update=":formDialogs:panelHis" />
 
 							<p:commandButton value="salvar" ajax="false"
-								disabled="#{projetoHistoricoBean.projeto==null? true:false}"
+								disabled="#{projetoHistoricoBean.projeto.codProjeto==null? true:false}"
 								action="#{projetoHistoricoBean.salvaProjetoHistorico}" />
 
 							<p:commandButton value="Limpar"
-								disabled="#{projetoHistoricoBean.projeto==null? true:false}"
+								disabled="#{projetoHistoricoBean.projeto.codProjeto==null? true:false}"
 								action="#{projetoHistoricoBean.limparCampos}">
 								<p:ajax
 									update=":frmCadastroDeProjetoHistorico, :frmPesquisaHistorico, :formDialogs:panelHis" />
@@ -185,7 +189,7 @@
 								styleClass="ui-panelgrid-blank">
 								<p:outputPanel>
 									<p:selectBooleanCheckbox
-										value="#{projetoHistoricoBean.projeto.checkPoint.coletaLogs}"
+										value="#{projetoHistoricoBean.projeto.checkPoint.levantamentoRequisitos}"
 										style="margin-right: 5px" id="levRequisito" />
 									<p:outputLabel value="Levantamento requisitos"
 										for="levRequisito" />
@@ -228,7 +232,7 @@
 									<h:outputText value="#{historico.tipoAcao.tipoAcao}" />
 								</p:column>
 
-								<p:column headerText="Histórioco">
+								<p:column headerText="Histórico">
 									<h:outputText value="#{historico.acaoHistorico.acaoHistorico}" />
 								</p:column>
 

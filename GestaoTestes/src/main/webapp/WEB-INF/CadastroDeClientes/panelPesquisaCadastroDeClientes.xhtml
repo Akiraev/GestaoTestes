@@ -13,7 +13,7 @@
 				<p:outputPanel>
 					<h:graphicImage library="images" name="lupa.png" height="15%"
 						width="15%" />
-					<p:outputLabel value="Pesquisar" style="font-size: 24px" />
+					<p:outputLabel value="Pesquisar" style="font-size: 24px !important" />
 				</p:outputPanel>
 
 				<p:outputPanel>
@@ -32,8 +32,8 @@
 						var="cliente">
 						<h:column>
 							<h:commandLink value="#{cliente.nomeCliente}"
-								style="text-decoration:none;" >
-								<f:setPropertyActionListener value="#{cliente}" 
+								style="text-decoration:none;">
+								<f:setPropertyActionListener value="#{cliente}"
 									target="#{cadastroClienteBean.cliente}" />
 							</h:commandLink>
 						</h:column>

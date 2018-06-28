@@ -27,14 +27,15 @@ public class ProjetoHistoricoBean {
 	private String nomeProjeto;
 	private String nomeCliente;
 	private Historico historico;
+	private Projeto projeto;
 	private List<Usuario> usuariosAutoComplete;
 	private List<Projeto> projetosPesquisado;
 	private List<Projeto> projetos;
 	private List<Historico> historicos;
-	private Projeto projeto;
 
 	@PostConstruct
 	public void init() {
+		this.projeto = new Projeto();
 		this.historico = new Historico();
 		this.projetos = DaoProjeto.listarProjetosAtivos();
 		this.usuariosAutoComplete = DaoUsuario.listarUsuariosAtivos();
@@ -117,18 +118,18 @@ public class ProjetoHistoricoBean {
 	public void salvaProjetoHistorico() {
 		this.projeto.getCheckPoint().setProjeto(this.projeto);
 		if (DaoCheckPoint.salvaCheckPoint(this.projeto.getCheckPoint())) {
-			
+
 			if (DaoProjeto.salvar(this.projeto)) {
 				Mensagem.sucesso("Projeto salvo com sucesso!");
 
 			} else {
 				Mensagem.falha("Não foi possível salvar este Projeto/Historico");
-				
+
 			}
 
 		} else
 			Mensagem.falha("Não foi possível salvar o checkpoint");
-		
+
 	}
 
 	public void excluirHistorico(Historico historico) {

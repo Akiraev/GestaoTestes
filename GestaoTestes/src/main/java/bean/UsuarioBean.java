@@ -15,7 +15,6 @@ import enumeradores.DireitoUsuario;
 import enumeradores.NivelUsuario;
 import enumeradores.Status;
 import util.Mensagem;
-import util.PDF;
 
 @ManagedBean(name = "cadastroUsuarioBean")
 @ViewScoped
@@ -66,11 +65,7 @@ public class UsuarioBean {
 	}
 
 	public void gerarPdfUsuario() {
-		if (PDF.usuario(this.usuario)) {
-			Mensagem.sucesso("PDF gerado");
-		} else {
-			Mensagem.falha("Não gerou PDF");
-		}
+		
 	}
 
 	public void buscarUsuarios() {

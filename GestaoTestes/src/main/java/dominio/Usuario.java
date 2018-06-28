@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import enumeradores.CargoUsuario;
@@ -37,6 +38,9 @@ public class Usuario {
 
 	@Column(updatable = false)
 	private Date dataCadastro;
+	
+	@Lob
+	private byte[] imagen;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 40)
@@ -130,5 +134,21 @@ public class Usuario {
 
 	public void setStatusUsuario(Status statusUsuario) {
 		this.statusUsuario = statusUsuario;
+	}
+
+	public byte[] getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
+	}
+
+	public List<Historico> getHistoricos() {
+		return historicos;
+	}
+
+	public void setHistoricos(List<Historico> historicos) {
+		this.historicos = historicos;
 	}
 }

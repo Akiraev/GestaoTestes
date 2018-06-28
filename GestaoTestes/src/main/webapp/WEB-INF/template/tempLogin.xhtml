@@ -1,59 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-	<h:head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    		<title><ui:insert name="titulo">Sistema de Comunicação e Gestão de Equipe de Testes</ui:insert></title>
-    		<h:outputStylesheet library="css" name="login.css"/>
-	</h:head>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="titulo">Sistema de Comunicação e Gestão de Equipe de Testes</ui:insert></title>
+
+	<style>
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 15px !important;
+}
+</style>
+
+</h:head>
+
+<h:body>
+
+	<!-- STATSUS DAS REQUISIÇÕES AJAX (LOADING) -->
+	<p:ajaxStatus styleClass="ajaxstatus">
+		<f:facet name="start">
+			<h:graphicImage library="images" name="Loading.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<p:outputLabel value="" />
+		</f:facet>
+	</p:ajaxStatus>
+
+	<!-- CABEÇALHO DA PAGINA PADRÃO -->
+	<div style="height: 50px;">
+		<span style="font-size: 20px; color: #ffffff">Sistema de Comunicação e Gerenciamento de Equipe de
+			Testes</span>
+	</div>
+
+
+	<div id="corpoPagina" style="background-color: #2f2a2a">
+		<ui:insert name="conteudo" />
+	</div>
 	
-	<h:body>
+	<p:messages/>
 	
-	
-		
-		<!-- STATSUS DAS REQUISIÇÕES AJAX (LOADING) -->
-		<p:ajaxStatus styleClass="ajaxstatus">
-			<f:facet name="start">
-				<h:graphicImage library="images" name="Loading.gif"/>
-			</f:facet>
-			<f:facet name="complete">
-				<p:outputLabel value="" />
-			</f:facet>
-		</p:ajaxStatus>
-		
-		<!-- CABEÇALHO DA PAGINA PADRÃO -->
-		<header>
-		 	<h1>Sistema de Comunicação e Gerenciamento de Equipe de Testes</h1>
-		</header>
-	
-	
-		<div id="corpoPagina">
-			
- 		
- 		<ui:insert name="conteudo"/>
- 		 
- 	    </div>
- 		<p:messages autoUpdate="true"/><!--  -->
- 		<p:growl id="growl" showDetail="true" sticky="true" />
-	 	<p:separator style="margin-top: 100px;box-shadow: 0px 2px 2px #ccc;"/>
-	 	
-	 	<!-- RODAPÉ DA PAGINA -->
-	 	<footer>
-		 	<div style="padding-left: 15px;padding-right: 15px;width: 100%;heigth: 30px;">
-				<div style="margin-right: auto;margin-left: auto; float:inherit; position:relative;">
-					
-					<h:link>
-						<p style="font-size: 9px; color: gray">Desenvolvido por: Evandro Souza e Roberto Floro</p>
-					</h:link>
-			 	</div>
-			</div>
-		</footer>
-	
-	</h:body>
+	<p:separator style="margin-top: 100px; box-shadow: 0px 2px 2px #ccc;" />
+
+	<!-- RODAPÉ DA PAGINA -->
+	<div>
+		<h:link>
+			<p style="font-size: 10px; color: gray">Desenvolvido por: Evandro
+				Souza e Roberto Floro</p>
+		</h:link>
+	</div>
+
+</h:body>
 
 </html>
