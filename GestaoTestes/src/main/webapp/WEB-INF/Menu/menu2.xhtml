@@ -40,57 +40,26 @@
 					
 				</p:panelGrid>
 				
-				<p:sidebar widgetVar="sidebar1" baseZIndex="10000" styleClass="sideBar">
+				<p:sidebar widgetVar="sidebar1" baseZIndex="10000" styleClass="sideBar" position="left"  >
 
 					 
 
 			
 						<h1 style="font-weight: normal; color: cadetblue;">Menu</h1>
 
-						
-						
-							<div class="menubuttons">
-								<p:commandButton value="Dashboard" action="#{menuBean.menuDash}"
-									update="@all"  />
-									
-							</div>
-						
 
-						
-							<div class="menubuttons">
-								<p:commandButton value="Cadastro de usuario"
-									action="#{menuBean.menuUsuario}" update="@all" />
-							</div>
-						
-
-						
-							<div class="menubuttons">
-								<p:commandButton value="Cadastro de Projeto"
-									action="#{menuBean.menuProjeto}" update="@all" />
-							</div>
-						
-
-						
-							<div class="menubuttons">
-								<p:commandButton value="Cadastro de Cliente"
-									action="#{menuBean.menuCliente}" update="@all" />
-							</div>
+						<p:menu>
+							
+								<p:menuitem value="Dashboard" url="../faces/dashboard.xhtml" style="height: 30px; width: 100%; margin-right: 0px; margin-left: 0px;"/>
+								<p:menuitem value="Cadastro de usuario" url="../faces/CadastroDeUsuario.xhtml" style="height: 30px; width: 100%; margin-right: 0px; margin-left: 0px;"/>
+								<p:menuitem value="Cadastro de Projeto" url="../faces/CadastroDeProjetos.xhtml" style="height: 30px; width: 100%; margin-right: 0px; margin-left: 0px;"/>
+								<p:menuitem value="Cadastro de Cliente" url="../facesCadastroDeCliente.xhtml" style="height: 30px; width: 100%; margin-right: 0px; margin-left: 0px;"/>
+								<p:menuitem value="Cadastro de Historico" url="../faces/CadastroDeProjetoHistorico.xhtml" style="height: 30px; width: 100%; margin-right: 0px; margin-left: 0px;"/>
+								<p:menuitem value="Sair" action="#{menuBean.menuSair}" style="height: 30px; width: 100%; margin-right: 0px; margin-left: 0px;"/>
+								
+						</p:menu>
 					
-
 						
-							<div class="menubuttons">
-								<p:commandButton value="Cadastro de Historico"
-									action="#{menuBean.menuProjetoHistorico}" update="@all" />
-							</div>
-					
-
-					
-							<div class="menubuttons">
-								<p:commandButton value="Sair" action="#{menuBean.menuSair}"
-									update="@all" />
-							</div>
-						
-
 					
 				</p:sidebar>
 			</div>

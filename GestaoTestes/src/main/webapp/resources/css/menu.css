@@ -4,9 +4,18 @@ a:hover{
 
 .menubuttons>.ui-button{
 	background-color: inherit;
-	border: none;
+	padding:05px;
+	height: 50px;
+	
 }
 
 .ui-button:hover {
-	background-color: #99ccff;
+	background-color: cadetblue;
+	color: #fffff;
+	
+}
+.sideBar {
+	margin: 0px;
+	padding: 0px;
+
 }

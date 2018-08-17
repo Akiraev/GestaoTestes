@@ -1,5 +1,6 @@
 package bean;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -7,8 +8,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 import dao.DaoProjeto;
 import dominio.CheckPoint;
@@ -23,6 +29,7 @@ import factory.SessionContextFactory;
 @ManagedBean(name = "dashboardBean")
 @ViewScoped
 public class DashboardBean {
+	
 	private Periodo periodoProjeto;
 	private Periodo periodoHistorico;
 	private List<Projeto> projetos;
@@ -30,6 +37,7 @@ public class DashboardBean {
 
 	@PostConstruct
 	public void init() {
+		
 		List<Projeto> ps = DaoProjeto.listarProjetosAtivos();
 		Usuario usuarioLogado = (Usuario) SessionContextFactory.getInstance()
 				.getAttribute(AtributesSession.USUARIO_LOGADO.getValue());
@@ -38,6 +46,7 @@ public class DashboardBean {
 	}
 
 	public List<Projeto> atribuiProjeto(List<Projeto> ps, Usuario usuarioLogado) {
+		
 		List<Projeto> projetos = new ArrayList<Projeto>();
 
 		if (usuarioLogado != null && usuarioLogado.getDireitoUsuario().equals(DireitoUsuario.ANALISTA)) {
@@ -57,6 +66,7 @@ public class DashboardBean {
 	}
 
 	public List<Historico> atribuiHistorico(List<Projeto> ps, Usuario usuarioLogado) {
+		
 		List<Historico> historicos = new ArrayList<Historico>();
 
 		if (usuarioLogado != null) {
@@ -69,7 +79,9 @@ public class DashboardBean {
 			}
 
 		} else {
+			
 			for (Projeto p : ps) {
+				
 				p = DaoProjeto.buscaProjetoLazy(p);
 				for (Historico h : p.getHistoricos()) {
 					historicos.add(h);
@@ -80,6 +92,7 @@ public class DashboardBean {
 	}
 
 	public void filtrarProjetoPorData() {
+		
 		if (this.periodoProjeto != null) {
 			List<Projeto> ps = DaoProjeto.listarProjetosAtivos();
 			Usuario usuarioLogado = (Usuario) SessionContextFactory.getInstance()
@@ -301,4 +314,16 @@ public class DashboardBean {
 	public void setHistoricos(List<Historico> historicos) {
 		this.historicos = historicos;
 	}
+	
+	public void onRowSelect(SelectEvent event) {
+		FacesMessage msg = new FacesMessage(null);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	
+	public void onRowUnSelect(UnselectEvent event) {
+		FacesMessage msg = new FacesMessage(null);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	
+	
 }

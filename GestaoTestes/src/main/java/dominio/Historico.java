@@ -29,6 +29,9 @@ public class Historico {
 	
 	@Column(name = "comentariohistorico")
 	private String comentarioHistorico;
+	
+	@Column(name = "contato")
+	private String contato;
 
 	@Column(name = "justificativaatraso")
 	private String justificativaAtraso;
@@ -69,6 +72,14 @@ public class Historico {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public String getContato() {
+		return contato;
+	}
+
+	public void setContato(String contato) {
+		this.contato = contato;
 	}
 
 	public StatusHistorioco getStatusHistorico() {

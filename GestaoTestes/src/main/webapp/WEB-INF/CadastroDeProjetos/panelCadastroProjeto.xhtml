@@ -1,4 +1,3 @@
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -10,34 +9,36 @@
 	<h:form id="frmCadastroProjeto">
 
 		<p:growl id="growl" showDetail="true" sticky="false" life="3000" />
-		<p:panel>
+		<p:panel header="Cadastro de Projetos" style="padding: 0px; border-style: none !important; box-shadow: 5px 5px 5px #BDBDBD;">
 
 			<p:outputPanel>
 				<h:graphicImage library="images" name="logo.png" height="5%"
-					width="5%" />
-				<p:outputLabel value="Cadastro de projeto"
-					style="font-size: 24px !important" />
+					width="5%" style="margin-left: 20px;"/>
+				<p:outputLabel value="Projeto"
+					style="font-size: 24px !important; margin-left: 10px;" />
 			</p:outputPanel>
 
-			<p:panel>
+			<p:panel style="border-style: none !important;">
+			
 				<p:panelGrid columns="1" layout="grid"
 					styleClass="ui-panelgrid-blank">
 
 					<!-- PAINEL DOS DADOS (TOP) DO CADASTRO DO PROJETO-->
 					<p:outputPanel>
+					
 						<p:panelGrid columns="3" layout="grid"
 							columnClasses="ui-grid-col-2,ui-grid-col-7,ui-grid-col-3"
 							styleClass="ui-panelgrid-blank">
 
 							<p:outputPanel>
-								<p:outputLabel value="Código cliente" for="codCliente" />
+								<p:outputLabel value="Código Cliente:" for="codCliente" styleClass="label" />
 								<br />
 								<p:inputText disabled="true" id="codCliente"
 									value="#{cadastroProjetoBean.projeto.cliente.codCliente}" />
 							</p:outputPanel>
 
 							<p:outputPanel>
-								<p:outputLabel value="Nome do cliente:" for="nomeCliente" />
+								<p:outputLabel value="Nome do Cliente:" for="nomeCliente" styleClass="label" />
 								<br />
 								<p:autoComplete id="nomeCliente" required="true"
 									value="#{cadastroProjetoBean.projeto.cliente}"
@@ -47,7 +48,7 @@
 							</p:outputPanel>
 
 							<p:outputPanel>
-								<p:outputLabel value="Status projeto:" for="statusProjeto" />
+								<p:outputLabel value="Status Projeto:" for="statusProjeto" styleClass="label" />
 								<br />
 								<p:selectOneMenu id="statusProjeto" autoWidth="false"
 									value="#{cadastroProjetoBean.projeto.statusProjeto}">
@@ -64,21 +65,21 @@
 							styleClass="ui-panelgrid-blank">
 
 							<p:outputPanel>
-								<p:outputLabel value="Código projeto" for="codProjeto" />
+								<p:outputLabel value="Código Projeto:" for="codProjeto" styleClass="label" />
 								<br />
 								<p:inputText disabled="true" id="codProjeto"
 									value="#{cadastroProjetoBean.projeto.codProjeto}" />
 							</p:outputPanel>
 
 							<p:outputPanel>
-								<p:outputLabel value="Nome do projeto" for="nomeProjeto" />
+								<p:outputLabel value="Nome do Projeto:" for="nomeProjeto" styleClass="label" />
 								<br />
 								<p:inputText id="nomeProjeto" required="true"
 									value="#{cadastroProjetoBean.projeto.nomeProjeto}" />
 							</p:outputPanel>
 
 							<p:outputPanel>
-								<p:outputLabel value="Data início:" for="dtCadProjeto" />
+								<p:outputLabel value="Data Início:" for="dtCadProjeto" styleClass="label" />
 								<br />
 								<p:calendar id="dtCadProjeto" pattern="dd/MM/yyyy"
 									value="#{cadastroProjetoBean.projeto.dataProjetoInicio}" />
@@ -91,7 +92,7 @@
 							styleClass="ui-panelgrid-blank">
 
 							<p:outputPanel>
-								<p:outputLabel value="Analista responsável" for="analista" />
+								<p:outputLabel value="Analista Responsável:" for="analista" styleClass="label" />
 								<br />
 								<p:autoComplete id="analista" required="true"
 									value="#{cadastroProjetoBean.projeto.analista}"
@@ -101,7 +102,7 @@
 							</p:outputPanel>
 
 							<p:outputPanel>
-								<p:outputLabel value="Gerente Responsável" for="gerente" />
+								<p:outputLabel value="Gerente Responsável:" for="gerente" styleClass="label" />
 								<br />
 								<p:autoComplete id="gerente" required="true"
 									value="#{cadastroProjetoBean.projeto.gerente}"
@@ -111,7 +112,7 @@
 							</p:outputPanel>
 
 							<p:outputPanel>
-								<p:outputLabel value="Data término" for="dtFimProjeto" />
+								<p:outputLabel value="Data Término:" for="dtFimProjeto" styleClass="label" />
 								<br />
 								<p:calendar id="dtFimProjeto" pattern="dd/MM/yyyy"
 									value="#{cadastroProjetoBean.projeto.dataProjetoFim}" />
@@ -128,7 +129,7 @@
 							</p:outputPanel>
 
 							<p:outputPanel>
-								<p:outputLabel value="Término efetivo" for="dtFimEfetivo" />
+								<p:outputLabel value="Término Efetivo:" for="dtFimEfetivo" styleClass="label" />
 								<br />
 								<p:calendar id="dtFimEfetivo" pattern="dd/MM/yyyy"
 									value="#{cadastroProjetoBean.projeto.dataFimEfetivo}" />
@@ -144,7 +145,7 @@
 							styleClass="ui-panelgrid-blank">
 							
 							<p:commandButton value="Imprimir Cadastro" ajax="false"
-								onclick="PrimeFaces.monitorDownload(start, stop);"
+								onclick=""
 								icon="ui-icon-arrowthick-1-s">
 								<p:fileDownload value="#{cadastroProjetoBean.file}" />
 							</p:commandButton>
@@ -166,28 +167,35 @@
 
 						<p:dataTable value="#{cadastroProjetoBean.projetos}" var="projeto"
 							reflow="true" emptyMessage="Sem novos projetos cadastrados"
-							style="font-size:15px">
-							<p:column headerText="Código projeto">
+							selectionMode="single" 
+						    style="margin-bottom: 15px; font-size:15px" rows="05" paginator="true" paginatorPosition="bottom">
+						    
+							<p:column headerText="Código" style="width: 05%; text-align: center;">
 								<h:outputText value="#{projeto.codProjeto}" />
 							</p:column>
 
-							<p:column headerText="Nome do cliente">
-								<h:outputText value="#{projeto.cliente.nomeCliente}" />
+							<p:column headerText="Nome do cliente" style="width: 30%;">
+								<h:outputText value="#{projeto.cliente.nomeCliente}" style="text-align: left;"/>
 							</p:column>
 
-							<p:column headerText="Nome do projeto">
-								<h:outputText value="#{projeto.nomeProjeto}" />
+							<p:column headerText="Nome do projeto" style="width: 35%; font-weight: bold;" >
+								<h:outputText value="#{projeto.nomeProjeto}" style="text-align: left;"/>
 							</p:column>
 
-							<p:column headerText="Analista responsável">
-								<h:outputText value="#{projeto.analista.nomeUsuario}" />
+							<p:column headerText="Analista" style="width: 15%;">
+								<h:outputText value="#{projeto.analista.nomeUsuario}" style="text-align: left;"/>
 							</p:column>
 
-							<p:column headerText="Gerente responsável">
-								<h:outputText value="#{projeto.gerente.nomeUsuario}" />
+							<p:column headerText="Gerente" style="width: 15%;">
+								<h:outputText value="#{projeto.gerente.nomeUsuario}" style="text-align: left;"/>
 							</p:column>
 
 						</p:dataTable>
+						
+						<p:separator/>
+						<p:outputLabel value="Total de Registros:" styleClass="outPutTotal"/>
+						<p:outputLabel value="#{cadastroProjetoBean.projetos.size()}" styleClass="outPutTotal"/>
+						
 					</p:outputPanel>
 				</p:panelGrid>
 			</p:panel>
